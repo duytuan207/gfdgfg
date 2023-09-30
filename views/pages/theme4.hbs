@@ -1,0 +1,5083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}</title>
+    <meta name="title"
+        content="{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}">
+    <meta name="description" content="{{ settings.description }}">
+    <meta name="keywords" content="{{ settings.keywords }}">
+    <meta name="theme-color" content="{{ settings.themeSite.mainColor }}" />
+    <meta property="og:title"
+        content="{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}">
+    <meta property="og:description" content="{{ settings.description }}">
+    <meta property="og:image" content="{{ settings.thumbnail }}">
+    <link rel="shortcut icon" href="{{ settings.favicon }}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+        integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+        integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="data/icons/google-s-logo/150/Google_Icons-09-512.png">
+    <link href="{{ public }}/css/main5883.css?v=7.2.9" rel="stylesheet" type="text/css">
+    <link href="{{ public }}/css/style5883.css?v=7.2.9" rel="stylesheet" type="text/css">
+    <link href="{{ public }}/plugins/highlight.js/styles/railscasts.css" rel="stylesheet" type="text/css">
+    <script src="{{ public }}/js/main.bundle5883.js?v=7.2.9" type="application/javascript"></script>
+    <script src="{{ public }}/js/demo_like5883.js?v=7.2.9" type="application/javascript"></script>
+    <script src="{{ public }}/plugins/highlight.js/lib/highlight.js" type="application/javascript"></script>
+    <script src="{{ public }}/plugins/highlight.js/build/highlight.pack.js" type="application/javascript"></script>
+    <script src="{{ public }}/js/docs5883.js?v=7.2.9" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" />
+    </script>
+    <style type="text/css">
+        .swal2-popup.swal2-toast {
+            flex-direction: row;
+            align-items: center;
+            width: auto;
+            padding: 0.625em;
+            overflow-y: hidden;
+            background: #fff;
+            box-shadow: 0 0 0.625em #d9d9d9;
+        }
+
+        .swal2-popup.swal2-toast .swal2-header {
+            flex-direction: row;
+            padding: 0;
+        }
+
+        .swal2-popup.swal2-toast .swal2-title {
+            flex-grow: 1;
+            justify-content: flex-start;
+            margin: 0 0.6em;
+            font-size: 1em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-footer {
+            margin: 0.5em 0 0;
+            padding: 0.5em 0 0;
+            font-size: 0.8em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-close {
+            position: static;
+            width: 0.8em;
+            height: 0.8em;
+            line-height: 0.8;
+        }
+
+        .swal2-popup.swal2-toast .swal2-content {
+            justify-content: flex-start;
+            padding: 0;
+            font-size: 1em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon {
+            width: 2em;
+            min-width: 2em;
+            height: 2em;
+            margin: 0;
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+            .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+                font-size: 0.25em;
+            }
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+            width: 2em;
+            height: 2em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+            top: 0.875em;
+            width: 1.375em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+            left: 0.3125em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+            right: 0.3125em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-actions {
+            flex-basis: auto !important;
+            width: auto;
+            height: auto;
+            margin: 0 0.3125em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-styled {
+            margin: 0 0.3125em;
+            padding: 0.3125em 0.625em;
+            font-size: 1em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-styled:focus {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(50, 100, 150, 0.4);
+        }
+
+        .swal2-popup.swal2-toast .swal2-success {
+            border-color: #a5dc86;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line] {
+            position: absolute;
+            width: 1.6em;
+            height: 3em;
+            transform: rotate(45deg);
+            border-radius: 50%;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
+            top: -0.8em;
+            left: -0.5em;
+            transform: rotate(-45deg);
+            transform-origin: 2em 2em;
+            border-radius: 4em 0 0 4em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
+            top: -0.25em;
+            left: 0.9375em;
+            transform-origin: 0 1.5em;
+            border-radius: 0 4em 4em 0;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+            width: 2em;
+            height: 2em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+            top: 0;
+            left: 0.4375em;
+            width: 0.4375em;
+            height: 2.6875em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line] {
+            height: 0.3125em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip] {
+            top: 1.125em;
+            left: 0.1875em;
+            width: 0.75em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long] {
+            top: 0.9375em;
+            right: 0.1875em;
+            width: 1.375em;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
+            -webkit-animation: swal2-toast-animate-success-line-tip 0.75s;
+            animation: swal2-toast-animate-success-line-tip 0.75s;
+        }
+
+        .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
+            -webkit-animation: swal2-toast-animate-success-line-long 0.75s;
+            animation: swal2-toast-animate-success-line-long 0.75s;
+        }
+
+        .swal2-popup.swal2-toast.swal2-show {
+            -webkit-animation: swal2-toast-show 0.5s;
+            animation: swal2-toast-show 0.5s;
+        }
+
+        .swal2-popup.swal2-toast.swal2-hide {
+            -webkit-animation: swal2-toast-hide 0.1s forwards;
+            animation: swal2-toast-hide 0.1s forwards;
+        }
+
+        .swal2-container {
+            display: flex;
+            position: fixed;
+            z-index: 1060;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625em;
+            overflow-x: hidden;
+            transition: background-color 0.1s;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .swal2-container.swal2-backdrop-show,
+        .swal2-container.swal2-noanimation {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .swal2-container.swal2-backdrop-hide {
+            background: transparent !important;
+        }
+
+        .swal2-container.swal2-top {
+            align-items: flex-start;
+        }
+
+        .swal2-container.swal2-top-start,
+        .swal2-container.swal2-top-left {
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .swal2-container.swal2-top-end,
+        .swal2-container.swal2-top-right {
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+
+        .swal2-container.swal2-center {
+            align-items: center;
+        }
+
+        .swal2-container.swal2-center-start,
+        .swal2-container.swal2-center-left {
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .swal2-container.swal2-center-end,
+        .swal2-container.swal2-center-right {
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .swal2-container.swal2-bottom {
+            align-items: flex-end;
+        }
+
+        .swal2-container.swal2-bottom-start,
+        .swal2-container.swal2-bottom-left {
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+
+        .swal2-container.swal2-bottom-end,
+        .swal2-container.swal2-bottom-right {
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+
+        .swal2-container.swal2-bottom> :first-child,
+        .swal2-container.swal2-bottom-start> :first-child,
+        .swal2-container.swal2-bottom-left> :first-child,
+        .swal2-container.swal2-bottom-end> :first-child,
+        .swal2-container.swal2-bottom-right> :first-child {
+            margin-top: auto;
+        }
+
+        .swal2-container.swal2-grow-fullscreen>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-self: stretch;
+            justify-content: center;
+        }
+
+        .swal2-container.swal2-grow-row>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .swal2-container.swal2-grow-column {
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .swal2-container.swal2-grow-column.swal2-top,
+        .swal2-container.swal2-grow-column.swal2-center,
+        .swal2-container.swal2-grow-column.swal2-bottom {
+            align-items: center;
+        }
+
+        .swal2-container.swal2-grow-column.swal2-top-start,
+        .swal2-container.swal2-grow-column.swal2-center-start,
+        .swal2-container.swal2-grow-column.swal2-bottom-start,
+        .swal2-container.swal2-grow-column.swal2-top-left,
+        .swal2-container.swal2-grow-column.swal2-center-left,
+        .swal2-container.swal2-grow-column.swal2-bottom-left {
+            align-items: flex-start;
+        }
+
+        .swal2-container.swal2-grow-column.swal2-top-end,
+        .swal2-container.swal2-grow-column.swal2-center-end,
+        .swal2-container.swal2-grow-column.swal2-bottom-end,
+        .swal2-container.swal2-grow-column.swal2-top-right,
+        .swal2-container.swal2-grow-column.swal2-center-right,
+        .swal2-container.swal2-grow-column.swal2-bottom-right {
+            align-items: flex-end;
+        }
+
+        .swal2-container.swal2-grow-column>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .swal2-container.swal2-no-transition {
+            transition: none !important;
+        }
+
+        .swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)>.swal2-modal {
+            margin: auto;
+        }
+
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+            .swal2-container .swal2-modal {
+                margin: 0 !important;
+            }
+        }
+
+        .swal2-popup {
+            display: none;
+            position: relative;
+            box-sizing: border-box;
+            flex-direction: column;
+            justify-content: center;
+            width: 32em;
+            max-width: 100%;
+            padding: 1.25em;
+            border: none;
+            border-radius: 0.3125em;
+            background: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .swal2-popup:focus {
+            outline: none;
+        }
+
+        .swal2-popup.swal2-loading {
+            overflow-y: hidden;
+        }
+
+        .swal2-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.8em;
+        }
+
+        .swal2-title {
+            position: relative;
+            max-width: 100%;
+            margin: 0 0 0.4em;
+            padding: 0;
+            color: #595959;
+            font-size: 1.875em;
+            font-weight: 600;
+            text-align: center;
+            text-transform: none;
+            word-wrap: break-word;
+        }
+
+        .swal2-actions {
+            display: flex;
+            z-index: 1;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 1.25em auto 0;
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
+            opacity: 0.4;
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled:active {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+        }
+
+        .swal2-actions.swal2-loading .swal2-styled.swal2-confirm {
+            box-sizing: border-box;
+            width: 2.5em;
+            height: 2.5em;
+            margin: 0.46875em;
+            padding: 0;
+            -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            border: 0.25em solid transparent;
+            border-radius: 100%;
+            border-color: transparent;
+            background-color: transparent !important;
+            color: transparent !important;
+            cursor: default;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .swal2-actions.swal2-loading .swal2-styled.swal2-cancel {
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+
+        .swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-left: 5px;
+            -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            border: 3px solid #999999;
+            border-radius: 50%;
+            border-right-color: transparent;
+            box-shadow: 1px 1px 1px #fff;
+        }
+
+        .swal2-styled {
+            margin: 0.3125em;
+            padding: 0.625em 2em;
+            box-shadow: none;
+            font-weight: 500;
+        }
+
+        .swal2-styled:not([disabled]) {
+            cursor: pointer;
+        }
+
+        .swal2-styled.swal2-confirm {
+            border: 0;
+            border-radius: 0.25em;
+            background: initial;
+            background-color: #3085d6;
+            color: #fff;
+            font-size: 1.0625em;
+        }
+
+        .swal2-styled.swal2-cancel {
+            border: 0;
+            border-radius: 0.25em;
+            background: initial;
+            background-color: #aaa;
+            color: #fff;
+            font-size: 1.0625em;
+        }
+
+        .swal2-styled:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(50, 100, 150, 0.4);
+        }
+
+        .swal2-styled::-moz-focus-inner {
+            border: 0;
+        }
+
+        .swal2-footer {
+            justify-content: center;
+            margin: 1.25em 0 0;
+            padding: 1em 0 0;
+            border-top: 1px solid #eee;
+            color: #545454;
+            font-size: 1em;
+        }
+
+        .swal2-timer-progress-bar-container {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 0.25em;
+            overflow: hidden;
+            border-bottom-right-radius: 0.3125em;
+            border-bottom-left-radius: 0.3125em;
+        }
+
+        .swal2-timer-progress-bar {
+            width: 100%;
+            height: 0.25em;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .swal2-image {
+            max-width: 100%;
+            margin: 1.25em auto;
+        }
+
+        .swal2-close {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            right: 0;
+            align-items: center;
+            justify-content: center;
+            width: 1.2em;
+            height: 1.2em;
+            padding: 0;
+            overflow: hidden;
+            transition: color 0.1s ease-out;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            color: #cccccc;
+            font-family: serif;
+            font-size: 2.5em;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+
+        .swal2-close:hover {
+            transform: none;
+            background: transparent;
+            color: #f27474;
+        }
+
+        .swal2-close::-moz-focus-inner {
+            border: 0;
+        }
+
+        .swal2-content {
+            z-index: 1;
+            justify-content: center;
+            margin: 0;
+            padding: 0 1.6em;
+            color: #545454;
+            font-size: 1.125em;
+            font-weight: normal;
+            line-height: normal;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .swal2-input,
+        .swal2-file,
+        .swal2-textarea,
+        .swal2-select,
+        .swal2-radio,
+        .swal2-checkbox {
+            margin: 1em auto;
+        }
+
+        .swal2-input,
+        .swal2-file,
+        .swal2-textarea {
+            box-sizing: border-box;
+            width: 100%;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            border: 1px solid #d9d9d9;
+            border-radius: 0.1875em;
+            background: inherit;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+            color: inherit;
+            font-size: 1.125em;
+        }
+
+        .swal2-input.swal2-inputerror,
+        .swal2-file.swal2-inputerror,
+        .swal2-textarea.swal2-inputerror {
+            border-color: #f27474 !important;
+            box-shadow: 0 0 2px #f27474 !important;
+        }
+
+        .swal2-input:focus,
+        .swal2-file:focus,
+        .swal2-textarea:focus {
+            border: 1px solid #b4dbed;
+            outline: none;
+            box-shadow: 0 0 3px #c4e6f5;
+        }
+
+        .swal2-input::-moz-placeholder,
+        .swal2-file::-moz-placeholder,
+        .swal2-textarea::-moz-placeholder {
+            color: #cccccc;
+        }
+
+        .swal2-input:-ms-input-placeholder,
+        .swal2-file:-ms-input-placeholder,
+        .swal2-textarea:-ms-input-placeholder {
+            color: #cccccc;
+        }
+
+        .swal2-input::placeholder,
+        .swal2-file::placeholder,
+        .swal2-textarea::placeholder {
+            color: #cccccc;
+        }
+
+        .swal2-range {
+            margin: 1em auto;
+            background: #fff;
+        }
+
+        .swal2-range input {
+            width: 80%;
+        }
+
+        .swal2-range output {
+            width: 20%;
+            color: inherit;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .swal2-range input,
+        .swal2-range output {
+            height: 2.625em;
+            padding: 0;
+            font-size: 1.125em;
+            line-height: 2.625em;
+        }
+
+        .swal2-input {
+            height: 2.625em;
+            padding: 0 0.75em;
+        }
+
+        .swal2-input[type=number] {
+            max-width: 10em;
+        }
+
+        .swal2-file {
+            background: inherit;
+            font-size: 1.125em;
+        }
+
+        .swal2-textarea {
+            height: 6.75em;
+            padding: 0.75em;
+        }
+
+        .swal2-select {
+            min-width: 50%;
+            max-width: 100%;
+            padding: 0.375em 0.625em;
+            background: inherit;
+            color: inherit;
+            font-size: 1.125em;
+        }
+
+        .swal2-radio,
+        .swal2-checkbox {
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: inherit;
+        }
+
+        .swal2-radio label,
+        .swal2-checkbox label {
+            margin: 0 0.6em;
+            font-size: 1.125em;
+        }
+
+        .swal2-radio input,
+        .swal2-checkbox input {
+            margin: 0 0.4em;
+        }
+
+        .swal2-validation-message {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625em;
+            overflow: hidden;
+            background: #f0f0f0;
+            color: #666666;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .swal2-validation-message::before {
+            content: "!";
+            display: inline-block;
+            width: 1.5em;
+            min-width: 1.5em;
+            height: 1.5em;
+            margin: 0 0.625em;
+            border-radius: 50%;
+            background-color: #f27474;
+            color: #fff;
+            font-weight: 600;
+            line-height: 1.5em;
+            text-align: center;
+        }
+
+        .swal2-icon {
+            position: relative;
+            box-sizing: content-box;
+            justify-content: center;
+            width: 5em;
+            height: 5em;
+            margin: 1.25em auto 1.875em;
+            border: 0.25em solid transparent;
+            border-radius: 50%;
+            font-family: inherit;
+            line-height: 5em;
+            cursor: default;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .swal2-icon .swal2-icon-content {
+            display: flex;
+            align-items: center;
+            font-size: 3.75em;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #f27474;
+            color: #f27474;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+            display: block;
+            position: absolute;
+            top: 2.3125em;
+            width: 2.9375em;
+            height: 0.3125em;
+            border-radius: 0.125em;
+            background-color: #f27474;
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+            left: 1.0625em;
+            transform: rotate(45deg);
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+            right: 1em;
+            transform: rotate(-45deg);
+        }
+
+        .swal2-icon.swal2-error.swal2-icon-show {
+            -webkit-animation: swal2-animate-error-icon 0.5s;
+            animation: swal2-animate-error-icon 0.5s;
+        }
+
+        .swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
+            -webkit-animation: swal2-animate-error-x-mark 0.5s;
+            animation: swal2-animate-error-x-mark 0.5s;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #facea8;
+            color: #f8bb86;
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #9de0f6;
+            color: #3fc3ee;
+        }
+
+        .swal2-icon.swal2-question {
+            border-color: #c9dae1;
+            color: #87adbd;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #a5dc86;
+            color: #a5dc86;
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line] {
+            position: absolute;
+            width: 3.75em;
+            height: 7.5em;
+            transform: rotate(45deg);
+            border-radius: 50%;
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
+            top: -0.4375em;
+            left: -2.0635em;
+            transform: rotate(-45deg);
+            transform-origin: 3.75em 3.75em;
+            border-radius: 7.5em 0 0 7.5em;
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
+            top: -0.6875em;
+            left: 1.875em;
+            transform: rotate(-45deg);
+            transform-origin: 0 3.75em;
+            border-radius: 0 7.5em 7.5em 0;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            position: absolute;
+            z-index: 2;
+            top: -0.25em;
+            left: -0.25em;
+            box-sizing: content-box;
+            width: 100%;
+            height: 100%;
+            border: 0.25em solid rgba(165, 220, 134, 0.3);
+            border-radius: 50%;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-fix {
+            position: absolute;
+            z-index: 1;
+            top: 0.5em;
+            left: 1.625em;
+            width: 0.4375em;
+            height: 5.625em;
+            transform: rotate(-45deg);
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line] {
+            display: block;
+            position: absolute;
+            z-index: 2;
+            height: 0.3125em;
+            border-radius: 0.125em;
+            background-color: #a5dc86;
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
+            top: 2.875em;
+            left: 0.8125em;
+            width: 1.5625em;
+            transform: rotate(45deg);
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
+            top: 2.375em;
+            right: 0.5em;
+            width: 2.9375em;
+            transform: rotate(-45deg);
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
+            -webkit-animation: swal2-animate-success-line-tip 0.75s;
+            animation: swal2-animate-success-line-tip 0.75s;
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
+            -webkit-animation: swal2-animate-success-line-long 0.75s;
+            animation: swal2-animate-success-line-long 0.75s;
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
+            -webkit-animation: swal2-rotate-success-circular-line 4.25s ease-in;
+            animation: swal2-rotate-success-circular-line 4.25s ease-in;
+        }
+
+        .swal2-progress-steps {
+            align-items: center;
+            margin: 0 0 1.25em;
+            padding: 0;
+            background: inherit;
+            font-weight: 600;
+        }
+
+        .swal2-progress-steps li {
+            display: inline-block;
+            position: relative;
+        }
+
+        .swal2-progress-steps .swal2-progress-step {
+            z-index: 20;
+            width: 2em;
+            height: 2em;
+            border-radius: 2em;
+            background: #3085d6;
+            color: #fff;
+            line-height: 2em;
+            text-align: center;
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
+            background: #3085d6;
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step {
+            background: #add8e6;
+            color: #fff;
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line {
+            background: #add8e6;
+        }
+
+        .swal2-progress-steps .swal2-progress-step-line {
+            z-index: 10;
+            width: 2.5em;
+            height: 0.4em;
+            margin: 0 -1px;
+            background: #3085d6;
+        }
+
+        [class^=swal2] {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .swal2-show {
+            -webkit-animation: swal2-show 0.3s;
+            animation: swal2-show 0.3s;
+        }
+
+        .swal2-hide {
+            -webkit-animation: swal2-hide 0.15s forwards;
+            animation: swal2-hide 0.15s forwards;
+        }
+
+        .swal2-noanimation {
+            transition: none;
+        }
+
+        .swal2-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll;
+        }
+
+        .swal2-rtl .swal2-close {
+            right: auto;
+            left: 0;
+        }
+
+        .swal2-rtl .swal2-timer-progress-bar {
+            right: 0;
+            left: auto;
+        }
+
+        @supports (-ms-accelerator: true) {
+            .swal2-range input {
+                width: 100% !important;
+            }
+
+            .swal2-range output {
+                display: none;
+            }
+        }
+
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+            .swal2-range input {
+                width: 100% !important;
+            }
+
+            .swal2-range output {
+                display: none;
+            }
+        }
+
+        @-moz-document url-prefix() {
+            .swal2-close:focus {
+                outline: 2px solid rgba(50, 100, 150, 0.4);
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-show {
+            0% {
+                transform: translateY(-0.625em) rotateZ(2deg);
+            }
+
+            33% {
+                transform: translateY(0) rotateZ(-2deg);
+            }
+
+            66% {
+                transform: translateY(0.3125em) rotateZ(2deg);
+            }
+
+            100% {
+                transform: translateY(0) rotateZ(0deg);
+            }
+        }
+
+        @keyframes swal2-toast-show {
+            0% {
+                transform: translateY(-0.625em) rotateZ(2deg);
+            }
+
+            33% {
+                transform: translateY(0) rotateZ(-2deg);
+            }
+
+            66% {
+                transform: translateY(0.3125em) rotateZ(2deg);
+            }
+
+            100% {
+                transform: translateY(0) rotateZ(0deg);
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-hide {
+            100% {
+                transform: rotateZ(1deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swal2-toast-hide {
+            100% {
+                transform: rotateZ(1deg);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-animate-success-line-tip {
+            0% {
+                top: 0.5625em;
+                left: 0.0625em;
+                width: 0;
+            }
+
+            54% {
+                top: 0.125em;
+                left: 0.125em;
+                width: 0;
+            }
+
+            70% {
+                top: 0.625em;
+                left: -0.25em;
+                width: 1.625em;
+            }
+
+            84% {
+                top: 1.0625em;
+                left: 0.75em;
+                width: 0.5em;
+            }
+
+            100% {
+                top: 1.125em;
+                left: 0.1875em;
+                width: 0.75em;
+            }
+        }
+
+        @keyframes swal2-toast-animate-success-line-tip {
+            0% {
+                top: 0.5625em;
+                left: 0.0625em;
+                width: 0;
+            }
+
+            54% {
+                top: 0.125em;
+                left: 0.125em;
+                width: 0;
+            }
+
+            70% {
+                top: 0.625em;
+                left: -0.25em;
+                width: 1.625em;
+            }
+
+            84% {
+                top: 1.0625em;
+                left: 0.75em;
+                width: 0.5em;
+            }
+
+            100% {
+                top: 1.125em;
+                left: 0.1875em;
+                width: 0.75em;
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-animate-success-line-long {
+            0% {
+                top: 1.625em;
+                right: 1.375em;
+                width: 0;
+            }
+
+            65% {
+                top: 1.25em;
+                right: 0.9375em;
+                width: 0;
+            }
+
+            84% {
+                top: 0.9375em;
+                right: 0;
+                width: 1.125em;
+            }
+
+            100% {
+                top: 0.9375em;
+                right: 0.1875em;
+                width: 1.375em;
+            }
+        }
+
+        @keyframes swal2-toast-animate-success-line-long {
+            0% {
+                top: 1.625em;
+                right: 1.375em;
+                width: 0;
+            }
+
+            65% {
+                top: 1.25em;
+                right: 0.9375em;
+                width: 0;
+            }
+
+            84% {
+                top: 0.9375em;
+                right: 0;
+                width: 1.125em;
+            }
+
+            100% {
+                top: 0.9375em;
+                right: 0.1875em;
+                width: 1.375em;
+            }
+        }
+
+        @-webkit-keyframes swal2-show {
+            0% {
+                transform: scale(0.7);
+            }
+
+            45% {
+                transform: scale(1.05);
+            }
+
+            80% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes swal2-show {
+            0% {
+                transform: scale(0.7);
+            }
+
+            45% {
+                transform: scale(1.05);
+            }
+
+            80% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes swal2-hide {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swal2-hide {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-success-line-tip {
+            0% {
+                top: 1.1875em;
+                left: 0.0625em;
+                width: 0;
+            }
+
+            54% {
+                top: 1.0625em;
+                left: 0.125em;
+                width: 0;
+            }
+
+            70% {
+                top: 2.1875em;
+                left: -0.375em;
+                width: 3.125em;
+            }
+
+            84% {
+                top: 3em;
+                left: 1.3125em;
+                width: 1.0625em;
+            }
+
+            100% {
+                top: 2.8125em;
+                left: 0.8125em;
+                width: 1.5625em;
+            }
+        }
+
+        @keyframes swal2-animate-success-line-tip {
+            0% {
+                top: 1.1875em;
+                left: 0.0625em;
+                width: 0;
+            }
+
+            54% {
+                top: 1.0625em;
+                left: 0.125em;
+                width: 0;
+            }
+
+            70% {
+                top: 2.1875em;
+                left: -0.375em;
+                width: 3.125em;
+            }
+
+            84% {
+                top: 3em;
+                left: 1.3125em;
+                width: 1.0625em;
+            }
+
+            100% {
+                top: 2.8125em;
+                left: 0.8125em;
+                width: 1.5625em;
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-success-line-long {
+            0% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0;
+            }
+
+            65% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0;
+            }
+
+            84% {
+                top: 2.1875em;
+                right: 0;
+                width: 3.4375em;
+            }
+
+            100% {
+                top: 2.375em;
+                right: 0.5em;
+                width: 2.9375em;
+            }
+        }
+
+        @keyframes swal2-animate-success-line-long {
+            0% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0;
+            }
+
+            65% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0;
+            }
+
+            84% {
+                top: 2.1875em;
+                right: 0;
+                width: 3.4375em;
+            }
+
+            100% {
+                top: 2.375em;
+                right: 0.5em;
+                width: 2.9375em;
+            }
+        }
+
+        @-webkit-keyframes swal2-rotate-success-circular-line {
+            0% {
+                transform: rotate(-45deg);
+            }
+
+            5% {
+                transform: rotate(-45deg);
+            }
+
+            12% {
+                transform: rotate(-405deg);
+            }
+
+            100% {
+                transform: rotate(-405deg);
+            }
+        }
+
+        @keyframes swal2-rotate-success-circular-line {
+            0% {
+                transform: rotate(-45deg);
+            }
+
+            5% {
+                transform: rotate(-45deg);
+            }
+
+            12% {
+                transform: rotate(-405deg);
+            }
+
+            100% {
+                transform: rotate(-405deg);
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-error-x-mark {
+            0% {
+                margin-top: 1.625em;
+                transform: scale(0.4);
+                opacity: 0;
+            }
+
+            50% {
+                margin-top: 1.625em;
+                transform: scale(0.4);
+                opacity: 0;
+            }
+
+            80% {
+                margin-top: -0.375em;
+                transform: scale(1.15);
+            }
+
+            100% {
+                margin-top: 0;
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes swal2-animate-error-x-mark {
+            0% {
+                margin-top: 1.625em;
+                transform: scale(0.4);
+                opacity: 0;
+            }
+
+            50% {
+                margin-top: 1.625em;
+                transform: scale(0.4);
+                opacity: 0;
+            }
+
+            80% {
+                margin-top: -0.375em;
+                transform: scale(1.15);
+            }
+
+            100% {
+                margin-top: 0;
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-error-icon {
+            0% {
+                transform: rotateX(100deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes swal2-animate-error-icon {
+            0% {
+                transform: rotateX(100deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes swal2-rotate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes swal2-rotate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+            overflow: hidden;
+        }
+
+        body.swal2-height-auto {
+            height: auto !important;
+        }
+
+        body.swal2-no-backdrop .swal2-container {
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+            max-width: calc(100% - 0.625em * 2);
+            background-color: transparent !important;
+        }
+
+        body.swal2-no-backdrop .swal2-container>.swal2-modal {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top-start,
+        body.swal2-no-backdrop .swal2-container.swal2-top-left {
+            top: 0;
+            left: 0;
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top-end,
+        body.swal2-no-backdrop .swal2-container.swal2-top-right {
+            top: 0;
+            right: 0;
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center-start,
+        body.swal2-no-backdrop .swal2-container.swal2-center-left {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center-end,
+        body.swal2-no-backdrop .swal2-container.swal2-center-right {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-start,
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-end,
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-right {
+            right: 0;
+            bottom: 0;
+        }
+
+        @media print {
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+                overflow-y: scroll !important;
+            }
+
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true] {
+                display: none;
+            }
+
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
+                position: static !important;
+            }
+        }
+
+        body.swal2-toast-shown .swal2-container {
+            background-color: transparent;
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top {
+            top: 0;
+            right: auto;
+            bottom: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top-end,
+        body.swal2-toast-shown .swal2-container.swal2-top-right {
+            top: 0;
+            right: 0;
+            bottom: auto;
+            left: auto;
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top-start,
+        body.swal2-toast-shown .swal2-container.swal2-top-left {
+            top: 0;
+            right: auto;
+            bottom: auto;
+            left: 0;
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center-start,
+        body.swal2-toast-shown .swal2-container.swal2-center-left {
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center {
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center-end,
+        body.swal2-toast-shown .swal2-container.swal2-center-right {
+            top: 50%;
+            right: 0;
+            bottom: auto;
+            left: auto;
+            transform: translateY(-50%);
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom-start,
+        body.swal2-toast-shown .swal2-container.swal2-bottom-left {
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 0;
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom {
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom-end,
+        body.swal2-toast-shown .swal2-container.swal2-bottom-right {
+            top: auto;
+            right: 0;
+            bottom: 0;
+            left: auto;
+        }
+
+        body.swal2-toast-column .swal2-toast {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-actions {
+            flex: 1;
+            align-self: stretch;
+            height: 2.2em;
+            margin-top: 0.3125em;
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-loading {
+            justify-content: center;
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-input {
+            height: 2em;
+            margin: 0.3125em auto;
+            font-size: 1em;
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-validation-message {
+            font-size: 1em;
+        }
+    </style>
+    <style>
+        .swal2-popup.swal2-toast {
+            flex-direction: row;
+            align-items: center;
+            width: auto;
+            padding: .625em;
+            overflow-y: hidden;
+            background: #fff;
+            box-shadow: 0 0 .625em #d9d9d9
+        }
+
+        .swal2-popup.swal2-toast .swal2-header {
+            flex-direction: row;
+            padding: 0
+        }
+
+        .swal2-popup.swal2-toast .swal2-title {
+            flex-grow: 1;
+            justify-content: flex-start;
+            margin: 0 .6em;
+            font-size: 1em
+        }
+
+        .swal2-popup.swal2-toast .swal2-footer {
+            margin: .5em 0 0;
+            padding: .5em 0 0;
+            font-size: .8em
+        }
+
+        .swal2-popup.swal2-toast .swal2-close {
+            position: static;
+            width: .8em;
+            height: .8em;
+            line-height: .8
+        }
+
+        .swal2-popup.swal2-toast .swal2-content {
+            justify-content: flex-start;
+            padding: 0;
+            font-size: 1em
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon {
+            width: 2em;
+            min-width: 2em;
+            height: 2em;
+            margin: 0
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: 700
+        }
+
+        @media all and (-ms-high-contrast:none),
+        (-ms-high-contrast:active) {
+            .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+                font-size: .25em
+            }
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+            width: 2em;
+            height: 2em
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+            top: .875em;
+            width: 1.375em
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+            left: .3125em
+        }
+
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+            right: .3125em
+        }
+
+        .swal2-popup.swal2-toast .swal2-actions {
+            flex-basis: auto !important;
+            width: auto;
+            height: auto;
+            margin: 0 .3125em
+        }
+
+        .swal2-popup.swal2-toast .swal2-styled {
+            margin: 0 .3125em;
+            padding: .3125em .625em;
+            font-size: 1em
+        }
+
+        .swal2-popup.swal2-toast .swal2-styled:focus {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(50, 100, 150, .4)
+        }
+
+        .swal2-popup.swal2-toast .swal2-success {
+            border-color: #a5dc86
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line] {
+            position: absolute;
+            width: 1.6em;
+            height: 3em;
+            transform: rotate(45deg);
+            border-radius: 50%
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
+            top: -.8em;
+            left: -.5em;
+            transform: rotate(-45deg);
+            transform-origin: 2em 2em;
+            border-radius: 4em 0 0 4em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
+            top: -.25em;
+            left: .9375em;
+            transform-origin: 0 1.5em;
+            border-radius: 0 4em 4em 0
+        }
+
+        .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+            width: 2em;
+            height: 2em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+            top: 0;
+            left: .4375em;
+            width: .4375em;
+            height: 2.6875em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line] {
+            height: .3125em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip] {
+            top: 1.125em;
+            left: .1875em;
+            width: .75em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long] {
+            top: .9375em;
+            right: .1875em;
+            width: 1.375em
+        }
+
+        .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
+            -webkit-animation: swal2-toast-animate-success-line-tip .75s;
+            animation: swal2-toast-animate-success-line-tip .75s
+        }
+
+        .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
+            -webkit-animation: swal2-toast-animate-success-line-long .75s;
+            animation: swal2-toast-animate-success-line-long .75s
+        }
+
+        .swal2-popup.swal2-toast.swal2-show {
+            -webkit-animation: swal2-toast-show .5s;
+            animation: swal2-toast-show .5s
+        }
+
+        .swal2-popup.swal2-toast.swal2-hide {
+            -webkit-animation: swal2-toast-hide .1s forwards;
+            animation: swal2-toast-hide .1s forwards
+        }
+
+        .swal2-container {
+            display: flex;
+            position: fixed;
+            z-index: 1060;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: .625em;
+            overflow-x: hidden;
+            transition: background-color .1s;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .swal2-container.swal2-backdrop-show,
+        .swal2-container.swal2-noanimation {
+            background: rgba(0, 0, 0, .4)
+        }
+
+        .swal2-container.swal2-backdrop-hide {
+            background: 0 0 !important
+        }
+
+        .swal2-container.swal2-top {
+            align-items: flex-start
+        }
+
+        .swal2-container.swal2-top-left,
+        .swal2-container.swal2-top-start {
+            align-items: flex-start;
+            justify-content: flex-start
+        }
+
+        .swal2-container.swal2-top-end,
+        .swal2-container.swal2-top-right {
+            align-items: flex-start;
+            justify-content: flex-end
+        }
+
+        .swal2-container.swal2-center {
+            align-items: center
+        }
+
+        .swal2-container.swal2-center-left,
+        .swal2-container.swal2-center-start {
+            align-items: center;
+            justify-content: flex-start
+        }
+
+        .swal2-container.swal2-center-end,
+        .swal2-container.swal2-center-right {
+            align-items: center;
+            justify-content: flex-end
+        }
+
+        .swal2-container.swal2-bottom {
+            align-items: flex-end
+        }
+
+        .swal2-container.swal2-bottom-left,
+        .swal2-container.swal2-bottom-start {
+            align-items: flex-end;
+            justify-content: flex-start
+        }
+
+        .swal2-container.swal2-bottom-end,
+        .swal2-container.swal2-bottom-right {
+            align-items: flex-end;
+            justify-content: flex-end
+        }
+
+        .swal2-container.swal2-bottom-end>:first-child,
+        .swal2-container.swal2-bottom-left>:first-child,
+        .swal2-container.swal2-bottom-right>:first-child,
+        .swal2-container.swal2-bottom-start>:first-child,
+        .swal2-container.swal2-bottom>:first-child {
+            margin-top: auto
+        }
+
+        .swal2-container.swal2-grow-fullscreen>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-self: stretch;
+            justify-content: center
+        }
+
+        .swal2-container.swal2-grow-row>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-content: center;
+            justify-content: center
+        }
+
+        .swal2-container.swal2-grow-column {
+            flex: 1;
+            flex-direction: column
+        }
+
+        .swal2-container.swal2-grow-column.swal2-bottom,
+        .swal2-container.swal2-grow-column.swal2-center,
+        .swal2-container.swal2-grow-column.swal2-top {
+            align-items: center
+        }
+
+        .swal2-container.swal2-grow-column.swal2-bottom-left,
+        .swal2-container.swal2-grow-column.swal2-bottom-start,
+        .swal2-container.swal2-grow-column.swal2-center-left,
+        .swal2-container.swal2-grow-column.swal2-center-start,
+        .swal2-container.swal2-grow-column.swal2-top-left,
+        .swal2-container.swal2-grow-column.swal2-top-start {
+            align-items: flex-start
+        }
+
+        .swal2-container.swal2-grow-column.swal2-bottom-end,
+        .swal2-container.swal2-grow-column.swal2-bottom-right,
+        .swal2-container.swal2-grow-column.swal2-center-end,
+        .swal2-container.swal2-grow-column.swal2-center-right,
+        .swal2-container.swal2-grow-column.swal2-top-end,
+        .swal2-container.swal2-grow-column.swal2-top-right {
+            align-items: flex-end
+        }
+
+        .swal2-container.swal2-grow-column>.swal2-modal {
+            display: flex !important;
+            flex: 1;
+            align-content: center;
+            justify-content: center
+        }
+
+        .swal2-container.swal2-no-transition {
+            transition: none !important
+        }
+
+        .swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)>.swal2-modal {
+            margin: auto
+        }
+
+        @media all and (-ms-high-contrast:none),
+        (-ms-high-contrast:active) {
+            .swal2-container .swal2-modal {
+                margin: 0 !important
+            }
+        }
+
+        .swal2-popup {
+            display: none;
+            position: relative;
+            box-sizing: border-box;
+            flex-direction: column;
+            justify-content: center;
+            width: 32em;
+            max-width: 100%;
+            padding: 1.25em;
+            border: none;
+            border-radius: .3125em;
+            background: #fff;
+            font-family: inherit;
+            font-size: 1rem
+        }
+
+        .swal2-popup:focus {
+            outline: 0
+        }
+
+        .swal2-popup.swal2-loading {
+            overflow-y: hidden
+        }
+
+        .swal2-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.8em
+        }
+
+        .swal2-title {
+            position: relative;
+            max-width: 100%;
+            margin: 0 0 .4em;
+            padding: 0;
+            color: #595959;
+            font-size: 1.875em;
+            font-weight: 600;
+            text-align: center;
+            text-transform: none;
+            word-wrap: break-word
+        }
+
+        .swal2-actions {
+            display: flex;
+            z-index: 1;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 1.25em auto 0
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
+            opacity: .4
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+            background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1))
+        }
+
+        .swal2-actions:not(.swal2-loading) .swal2-styled:active {
+            background-image: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2))
+        }
+
+        .swal2-actions.swal2-loading .swal2-styled.swal2-confirm {
+            box-sizing: border-box;
+            width: 2.5em;
+            height: 2.5em;
+            margin: .46875em;
+            padding: 0;
+            -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            border: .25em solid transparent;
+            border-radius: 100%;
+            border-color: transparent;
+            background-color: transparent !important;
+            color: transparent !important;
+            cursor: default;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .swal2-actions.swal2-loading .swal2-styled.swal2-cancel {
+            margin-right: 30px;
+            margin-left: 30px
+        }
+
+        .swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-left: 5px;
+            -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+            border: 3px solid #999;
+            border-radius: 50%;
+            border-right-color: transparent;
+            box-shadow: 1px 1px 1px #fff
+        }
+
+        .swal2-styled {
+            margin: .3125em;
+            padding: .625em 2em;
+            box-shadow: none;
+            font-weight: 500
+        }
+
+        .swal2-styled:not([disabled]) {
+            cursor: pointer
+        }
+
+        .swal2-styled.swal2-confirm {
+            border: 0;
+            border-radius: .25em;
+            background: initial;
+            background-color: #3085d6;
+            color: #fff;
+            font-size: 1.0625em
+        }
+
+        .swal2-styled.swal2-cancel {
+            border: 0;
+            border-radius: .25em;
+            background: initial;
+            background-color: #aaa;
+            color: #fff;
+            font-size: 1.0625em
+        }
+
+        .swal2-styled:focus {
+            outline: 0;
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(50, 100, 150, .4)
+        }
+
+        .swal2-styled::-moz-focus-inner {
+            border: 0
+        }
+
+        .swal2-footer {
+            justify-content: center;
+            margin: 1.25em 0 0;
+            padding: 1em 0 0;
+            border-top: 1px solid #eee;
+            color: #545454;
+            font-size: 1em
+        }
+
+        .swal2-timer-progress-bar-container {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: .25em;
+            overflow: hidden;
+            border-bottom-right-radius: .3125em;
+            border-bottom-left-radius: .3125em
+        }
+
+        .swal2-timer-progress-bar {
+            width: 100%;
+            height: .25em;
+            background: rgba(0, 0, 0, .2)
+        }
+
+        .swal2-image {
+            max-width: 100%;
+            margin: 1.25em auto
+        }
+
+        .swal2-close {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            right: 0;
+            align-items: center;
+            justify-content: center;
+            width: 1.2em;
+            height: 1.2em;
+            padding: 0;
+            overflow: hidden;
+            transition: color .1s ease-out;
+            border: none;
+            border-radius: 0;
+            background: 0 0;
+            color: #ccc;
+            font-family: serif;
+            font-size: 2.5em;
+            line-height: 1.2;
+            cursor: pointer
+        }
+
+        .swal2-close:hover {
+            transform: none;
+            background: 0 0;
+            color: #f27474
+        }
+
+        .swal2-close::-moz-focus-inner {
+            border: 0
+        }
+
+        .swal2-content {
+            z-index: 1;
+            justify-content: center;
+            margin: 0;
+            padding: 0 1.6em;
+            color: #545454;
+            font-size: 1.125em;
+            font-weight: 400;
+            line-height: normal;
+            text-align: center;
+            word-wrap: break-word
+        }
+
+        .swal2-checkbox,
+        .swal2-file,
+        .swal2-input,
+        .swal2-radio,
+        .swal2-select,
+        .swal2-textarea {
+            margin: 1em auto
+        }
+
+        .swal2-file,
+        .swal2-input,
+        .swal2-textarea {
+            box-sizing: border-box;
+            width: 100%;
+            transition: border-color .3s, box-shadow .3s;
+            border: 1px solid #d9d9d9;
+            border-radius: .1875em;
+            background: inherit;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .06);
+            color: inherit;
+            font-size: 1.125em
+        }
+
+        .swal2-file.swal2-inputerror,
+        .swal2-input.swal2-inputerror,
+        .swal2-textarea.swal2-inputerror {
+            border-color: #f27474 !important;
+            box-shadow: 0 0 2px #f27474 !important
+        }
+
+        .swal2-file:focus,
+        .swal2-input:focus,
+        .swal2-textarea:focus {
+            border: 1px solid #b4dbed;
+            outline: 0;
+            box-shadow: 0 0 3px #c4e6f5
+        }
+
+        .swal2-file::-moz-placeholder,
+        .swal2-input::-moz-placeholder,
+        .swal2-textarea::-moz-placeholder {
+            color: #ccc
+        }
+
+        .swal2-file:-ms-input-placeholder,
+        .swal2-input:-ms-input-placeholder,
+        .swal2-textarea:-ms-input-placeholder {
+            color: #ccc
+        }
+
+        .swal2-file::-ms-input-placeholder,
+        .swal2-input::-ms-input-placeholder,
+        .swal2-textarea::-ms-input-placeholder {
+            color: #ccc
+        }
+
+        .swal2-file::placeholder,
+        .swal2-input::placeholder,
+        .swal2-textarea::placeholder {
+            color: #ccc
+        }
+
+        .swal2-range {
+            margin: 1em auto;
+            background: #fff
+        }
+
+        .swal2-range input {
+            width: 80%
+        }
+
+        .swal2-range output {
+            width: 20%;
+            color: inherit;
+            font-weight: 600;
+            text-align: center
+        }
+
+        .swal2-range input,
+        .swal2-range output {
+            height: 2.625em;
+            padding: 0;
+            font-size: 1.125em;
+            line-height: 2.625em
+        }
+
+        .swal2-input {
+            height: 2.625em;
+            padding: 0 .75em
+        }
+
+        .swal2-input[type=number] {
+            max-width: 10em
+        }
+
+        .swal2-file {
+            background: inherit;
+            font-size: 1.125em
+        }
+
+        .swal2-textarea {
+            height: 6.75em;
+            padding: .75em
+        }
+
+        .swal2-select {
+            min-width: 50%;
+            max-width: 100%;
+            padding: .375em .625em;
+            background: inherit;
+            color: inherit;
+            font-size: 1.125em
+        }
+
+        .swal2-checkbox,
+        .swal2-radio {
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: inherit
+        }
+
+        .swal2-checkbox label,
+        .swal2-radio label {
+            margin: 0 .6em;
+            font-size: 1.125em
+        }
+
+        .swal2-checkbox input,
+        .swal2-radio input {
+            margin: 0 .4em
+        }
+
+        .swal2-validation-message {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: .625em;
+            overflow: hidden;
+            background: #f0f0f0;
+            color: #666;
+            font-size: 1em;
+            font-weight: 300
+        }
+
+        .swal2-validation-message::before {
+            content: "!";
+            display: inline-block;
+            width: 1.5em;
+            min-width: 1.5em;
+            height: 1.5em;
+            margin: 0 .625em;
+            border-radius: 50%;
+            background-color: #f27474;
+            color: #fff;
+            font-weight: 600;
+            line-height: 1.5em;
+            text-align: center
+        }
+
+        .swal2-icon {
+            position: relative;
+            box-sizing: content-box;
+            justify-content: center;
+            width: 5em;
+            height: 5em;
+            margin: 1.25em auto 1.875em;
+            border: .25em solid transparent;
+            border-radius: 50%;
+            font-family: inherit;
+            line-height: 5em;
+            cursor: default;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .swal2-icon .swal2-icon-content {
+            display: flex;
+            align-items: center;
+            font-size: 3.75em
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #f27474;
+            color: #f27474
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark {
+            position: relative;
+            flex-grow: 1
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+            display: block;
+            position: absolute;
+            top: 2.3125em;
+            width: 2.9375em;
+            height: .3125em;
+            border-radius: .125em;
+            background-color: #f27474
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+            left: 1.0625em;
+            transform: rotate(45deg)
+        }
+
+        .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+            right: 1em;
+            transform: rotate(-45deg)
+        }
+
+        .swal2-icon.swal2-error.swal2-icon-show {
+            -webkit-animation: swal2-animate-error-icon .5s;
+            animation: swal2-animate-error-icon .5s
+        }
+
+        .swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
+            -webkit-animation: swal2-animate-error-x-mark .5s;
+            animation: swal2-animate-error-x-mark .5s
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #facea8;
+            color: #f8bb86
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #9de0f6;
+            color: #3fc3ee
+        }
+
+        .swal2-icon.swal2-question {
+            border-color: #c9dae1;
+            color: #87adbd
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #a5dc86;
+            color: #a5dc86
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line] {
+            position: absolute;
+            width: 3.75em;
+            height: 7.5em;
+            transform: rotate(45deg);
+            border-radius: 50%
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
+            top: -.4375em;
+            left: -2.0635em;
+            transform: rotate(-45deg);
+            transform-origin: 3.75em 3.75em;
+            border-radius: 7.5em 0 0 7.5em
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
+            top: -.6875em;
+            left: 1.875em;
+            transform: rotate(-45deg);
+            transform-origin: 0 3.75em;
+            border-radius: 0 7.5em 7.5em 0
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            position: absolute;
+            z-index: 2;
+            top: -.25em;
+            left: -.25em;
+            box-sizing: content-box;
+            width: 100%;
+            height: 100%;
+            border: .25em solid rgba(165, 220, 134, .3);
+            border-radius: 50%
+        }
+
+        .swal2-icon.swal2-success .swal2-success-fix {
+            position: absolute;
+            z-index: 1;
+            top: .5em;
+            left: 1.625em;
+            width: .4375em;
+            height: 5.625em;
+            transform: rotate(-45deg)
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line] {
+            display: block;
+            position: absolute;
+            z-index: 2;
+            height: .3125em;
+            border-radius: .125em;
+            background-color: #a5dc86
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
+            top: 2.875em;
+            left: .8125em;
+            width: 1.5625em;
+            transform: rotate(45deg)
+        }
+
+        .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
+            top: 2.375em;
+            right: .5em;
+            width: 2.9375em;
+            transform: rotate(-45deg)
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
+            -webkit-animation: swal2-animate-success-line-tip .75s;
+            animation: swal2-animate-success-line-tip .75s
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
+            -webkit-animation: swal2-animate-success-line-long .75s;
+            animation: swal2-animate-success-line-long .75s
+        }
+
+        .swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
+            -webkit-animation: swal2-rotate-success-circular-line 4.25s ease-in;
+            animation: swal2-rotate-success-circular-line 4.25s ease-in
+        }
+
+        .swal2-progress-steps {
+            align-items: center;
+            margin: 0 0 1.25em;
+            padding: 0;
+            background: inherit;
+            font-weight: 600
+        }
+
+        .swal2-progress-steps li {
+            display: inline-block;
+            position: relative
+        }
+
+        .swal2-progress-steps .swal2-progress-step {
+            z-index: 20;
+            width: 2em;
+            height: 2em;
+            border-radius: 2em;
+            background: #3085d6;
+            color: #fff;
+            line-height: 2em;
+            text-align: center
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
+            background: #3085d6
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step {
+            background: #add8e6;
+            color: #fff
+        }
+
+        .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line {
+            background: #add8e6
+        }
+
+        .swal2-progress-steps .swal2-progress-step-line {
+            z-index: 10;
+            width: 2.5em;
+            height: .4em;
+            margin: 0 -1px;
+            background: #3085d6
+        }
+
+        [class^=swal2] {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .swal2-show {
+            -webkit-animation: swal2-show .3s;
+            animation: swal2-show .3s
+        }
+
+        .swal2-hide {
+            -webkit-animation: swal2-hide .15s forwards;
+            animation: swal2-hide .15s forwards
+        }
+
+        .swal2-noanimation {
+            transition: none
+        }
+
+        .swal2-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll
+        }
+
+        .swal2-rtl .swal2-close {
+            right: auto;
+            left: 0
+        }
+
+        .swal2-rtl .swal2-timer-progress-bar {
+            right: 0;
+            left: auto
+        }
+
+        @supports (-ms-accelerator:true) {
+            .swal2-range input {
+                width: 100% !important
+            }
+
+            .swal2-range output {
+                display: none
+            }
+        }
+
+        @media all and (-ms-high-contrast:none),
+        (-ms-high-contrast:active) {
+            .swal2-range input {
+                width: 100% !important
+            }
+
+            .swal2-range output {
+                display: none
+            }
+        }
+
+        @-moz-document url-prefix() {
+            .swal2-close:focus {
+                outline: 2px solid rgba(50, 100, 150, .4)
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-show {
+            0% {
+                transform: translateY(-.625em) rotateZ(2deg)
+            }
+
+            33% {
+                transform: translateY(0) rotateZ(-2deg)
+            }
+
+            66% {
+                transform: translateY(.3125em) rotateZ(2deg)
+            }
+
+            100% {
+                transform: translateY(0) rotateZ(0)
+            }
+        }
+
+        @keyframes swal2-toast-show {
+            0% {
+                transform: translateY(-.625em) rotateZ(2deg)
+            }
+
+            33% {
+                transform: translateY(0) rotateZ(-2deg)
+            }
+
+            66% {
+                transform: translateY(.3125em) rotateZ(2deg)
+            }
+
+            100% {
+                transform: translateY(0) rotateZ(0)
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-hide {
+            100% {
+                transform: rotateZ(1deg);
+                opacity: 0
+            }
+        }
+
+        @keyframes swal2-toast-hide {
+            100% {
+                transform: rotateZ(1deg);
+                opacity: 0
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-animate-success-line-tip {
+            0% {
+                top: .5625em;
+                left: .0625em;
+                width: 0
+            }
+
+            54% {
+                top: .125em;
+                left: .125em;
+                width: 0
+            }
+
+            70% {
+                top: .625em;
+                left: -.25em;
+                width: 1.625em
+            }
+
+            84% {
+                top: 1.0625em;
+                left: .75em;
+                width: .5em
+            }
+
+            100% {
+                top: 1.125em;
+                left: .1875em;
+                width: .75em
+            }
+        }
+
+        @keyframes swal2-toast-animate-success-line-tip {
+            0% {
+                top: .5625em;
+                left: .0625em;
+                width: 0
+            }
+
+            54% {
+                top: .125em;
+                left: .125em;
+                width: 0
+            }
+
+            70% {
+                top: .625em;
+                left: -.25em;
+                width: 1.625em
+            }
+
+            84% {
+                top: 1.0625em;
+                left: .75em;
+                width: .5em
+            }
+
+            100% {
+                top: 1.125em;
+                left: .1875em;
+                width: .75em
+            }
+        }
+
+        @-webkit-keyframes swal2-toast-animate-success-line-long {
+            0% {
+                top: 1.625em;
+                right: 1.375em;
+                width: 0
+            }
+
+            65% {
+                top: 1.25em;
+                right: .9375em;
+                width: 0
+            }
+
+            84% {
+                top: .9375em;
+                right: 0;
+                width: 1.125em
+            }
+
+            100% {
+                top: .9375em;
+                right: .1875em;
+                width: 1.375em
+            }
+        }
+
+        @keyframes swal2-toast-animate-success-line-long {
+            0% {
+                top: 1.625em;
+                right: 1.375em;
+                width: 0
+            }
+
+            65% {
+                top: 1.25em;
+                right: .9375em;
+                width: 0
+            }
+
+            84% {
+                top: .9375em;
+                right: 0;
+                width: 1.125em
+            }
+
+            100% {
+                top: .9375em;
+                right: .1875em;
+                width: 1.375em
+            }
+        }
+
+        @-webkit-keyframes swal2-show {
+            0% {
+                transform: scale(.7)
+            }
+
+            45% {
+                transform: scale(1.05)
+            }
+
+            80% {
+                transform: scale(.95)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        @keyframes swal2-show {
+            0% {
+                transform: scale(.7)
+            }
+
+            45% {
+                transform: scale(1.05)
+            }
+
+            80% {
+                transform: scale(.95)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        @-webkit-keyframes swal2-hide {
+            0% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: scale(.5);
+                opacity: 0
+            }
+        }
+
+        @keyframes swal2-hide {
+            0% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: scale(.5);
+                opacity: 0
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-success-line-tip {
+            0% {
+                top: 1.1875em;
+                left: .0625em;
+                width: 0
+            }
+
+            54% {
+                top: 1.0625em;
+                left: .125em;
+                width: 0
+            }
+
+            70% {
+                top: 2.1875em;
+                left: -.375em;
+                width: 3.125em
+            }
+
+            84% {
+                top: 3em;
+                left: 1.3125em;
+                width: 1.0625em
+            }
+
+            100% {
+                top: 2.8125em;
+                left: .8125em;
+                width: 1.5625em
+            }
+        }
+
+        @keyframes swal2-animate-success-line-tip {
+            0% {
+                top: 1.1875em;
+                left: .0625em;
+                width: 0
+            }
+
+            54% {
+                top: 1.0625em;
+                left: .125em;
+                width: 0
+            }
+
+            70% {
+                top: 2.1875em;
+                left: -.375em;
+                width: 3.125em
+            }
+
+            84% {
+                top: 3em;
+                left: 1.3125em;
+                width: 1.0625em
+            }
+
+            100% {
+                top: 2.8125em;
+                left: .8125em;
+                width: 1.5625em
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-success-line-long {
+            0% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0
+            }
+
+            65% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0
+            }
+
+            84% {
+                top: 2.1875em;
+                right: 0;
+                width: 3.4375em
+            }
+
+            100% {
+                top: 2.375em;
+                right: .5em;
+                width: 2.9375em
+            }
+        }
+
+        @keyframes swal2-animate-success-line-long {
+            0% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0
+            }
+
+            65% {
+                top: 3.375em;
+                right: 2.875em;
+                width: 0
+            }
+
+            84% {
+                top: 2.1875em;
+                right: 0;
+                width: 3.4375em
+            }
+
+            100% {
+                top: 2.375em;
+                right: .5em;
+                width: 2.9375em
+            }
+        }
+
+        @-webkit-keyframes swal2-rotate-success-circular-line {
+            0% {
+                transform: rotate(-45deg)
+            }
+
+            5% {
+                transform: rotate(-45deg)
+            }
+
+            12% {
+                transform: rotate(-405deg)
+            }
+
+            100% {
+                transform: rotate(-405deg)
+            }
+        }
+
+        @keyframes swal2-rotate-success-circular-line {
+            0% {
+                transform: rotate(-45deg)
+            }
+
+            5% {
+                transform: rotate(-45deg)
+            }
+
+            12% {
+                transform: rotate(-405deg)
+            }
+
+            100% {
+                transform: rotate(-405deg)
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-error-x-mark {
+            0% {
+                margin-top: 1.625em;
+                transform: scale(.4);
+                opacity: 0
+            }
+
+            50% {
+                margin-top: 1.625em;
+                transform: scale(.4);
+                opacity: 0
+            }
+
+            80% {
+                margin-top: -.375em;
+                transform: scale(1.15)
+            }
+
+            100% {
+                margin-top: 0;
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        @keyframes swal2-animate-error-x-mark {
+            0% {
+                margin-top: 1.625em;
+                transform: scale(.4);
+                opacity: 0
+            }
+
+            50% {
+                margin-top: 1.625em;
+                transform: scale(.4);
+                opacity: 0
+            }
+
+            80% {
+                margin-top: -.375em;
+                transform: scale(1.15)
+            }
+
+            100% {
+                margin-top: 0;
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        @-webkit-keyframes swal2-animate-error-icon {
+            0% {
+                transform: rotateX(100deg);
+                opacity: 0
+            }
+
+            100% {
+                transform: rotateX(0);
+                opacity: 1
+            }
+        }
+
+        @keyframes swal2-animate-error-icon {
+            0% {
+                transform: rotateX(100deg);
+                opacity: 0
+            }
+
+            100% {
+                transform: rotateX(0);
+                opacity: 1
+            }
+        }
+
+        @-webkit-keyframes swal2-rotate-loading {
+            0% {
+                transform: rotate(0)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes swal2-rotate-loading {
+            0% {
+                transform: rotate(0)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+            overflow: hidden
+        }
+
+        body.swal2-height-auto {
+            height: auto !important
+        }
+
+        body.swal2-no-backdrop .swal2-container {
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+            max-width: calc(100% - .625em * 2);
+            background-color: transparent !important
+        }
+
+        body.swal2-no-backdrop .swal2-container>.swal2-modal {
+            box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top-left,
+        body.swal2-no-backdrop .swal2-container.swal2-top-start {
+            top: 0;
+            left: 0
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-top-end,
+        body.swal2-no-backdrop .swal2-container.swal2-top-right {
+            top: 0;
+            right: 0
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center-left,
+        body.swal2-no-backdrop .swal2-container.swal2-center-start {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-center-end,
+        body.swal2-no-backdrop .swal2-container.swal2-center-right {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-left,
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-start {
+            bottom: 0;
+            left: 0
+        }
+
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-end,
+        body.swal2-no-backdrop .swal2-container.swal2-bottom-right {
+            right: 0;
+            bottom: 0
+        }
+
+        @media print {
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+                overflow-y: scroll !important
+            }
+
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true] {
+                display: none
+            }
+
+            body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
+                position: static !important
+            }
+        }
+
+        body.swal2-toast-shown .swal2-container {
+            background-color: transparent
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top {
+            top: 0;
+            right: auto;
+            bottom: auto;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top-end,
+        body.swal2-toast-shown .swal2-container.swal2-top-right {
+            top: 0;
+            right: 0;
+            bottom: auto;
+            left: auto
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-top-left,
+        body.swal2-toast-shown .swal2-container.swal2-top-start {
+            top: 0;
+            right: auto;
+            bottom: auto;
+            left: 0
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center-left,
+        body.swal2-toast-shown .swal2-container.swal2-center-start {
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            left: 0;
+            transform: translateY(-50%)
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center {
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-center-end,
+        body.swal2-toast-shown .swal2-container.swal2-center-right {
+            top: 50%;
+            right: 0;
+            bottom: auto;
+            left: auto;
+            transform: translateY(-50%)
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom-left,
+        body.swal2-toast-shown .swal2-container.swal2-bottom-start {
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 0
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom {
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        body.swal2-toast-shown .swal2-container.swal2-bottom-end,
+        body.swal2-toast-shown .swal2-container.swal2-bottom-right {
+            top: auto;
+            right: 0;
+            bottom: 0;
+            left: auto
+        }
+
+        body.swal2-toast-column .swal2-toast {
+            flex-direction: column;
+            align-items: stretch
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-actions {
+            flex: 1;
+            align-self: stretch;
+            height: 2.2em;
+            margin-top: .3125em
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-loading {
+            justify-content: center
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-input {
+            height: 2em;
+            margin: .3125em auto;
+            font-size: 1em
+        }
+
+        body.swal2-toast-column .swal2-toast .swal2-validation-message {
+            font-size: 1em
+        }
+    </style>
+    <style type="text/css">
+        .tns-outer {
+            padding: 0 !important;
+        }
+
+        .tns-outer [hidden] {
+            display: none !important;
+        }
+
+        .tns-outer [aria-controls],
+        .tns-outer [data-action] {
+            cursor: pointer;
+        }
+
+        .tns-slider {
+            transition: all 0s;
+        }
+
+        .tns-slider>.tns-item {
+            box-sizing: border-box;
+        }
+
+        .tns-horizontal.tns-subpixel {
+            white-space: nowrap;
+        }
+
+        .tns-horizontal.tns-subpixel>.tns-item {
+            display: inline-block;
+            vertical-align: top;
+            white-space: normal;
+        }
+
+        .tns-horizontal.tns-no-subpixel:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .tns-horizontal.tns-no-subpixel>.tns-item {
+            float: left;
+        }
+
+        .tns-horizontal.tns-carousel.tns-no-subpixel>.tns-item {
+            margin-right: -100%;
+        }
+
+        .tns-no-calc {
+            position: relative;
+            left: 0;
+        }
+
+        .tns-gallery {
+            position: relative;
+            left: 0;
+            min-height: 1px;
+        }
+
+        .tns-gallery>.tns-item {
+            position: absolute;
+            left: -100%;
+            transition: transform 0s, opacity 0s;
+        }
+
+        .tns-gallery>.tns-slide-active {
+            position: relative;
+            left: auto !important;
+        }
+
+        .tns-gallery>.tns-moving {
+            transition: all 0.25s;
+        }
+
+        .tns-autowidth {
+            display: inline-block;
+        }
+
+        .tns-lazy-img {
+            transition: opacity 0.6s;
+            opacity: 0.6;
+        }
+
+        .tns-lazy-img.tns-complete {
+            opacity: 1;
+        }
+
+        .tns-ah {
+            transition: height 0s;
+        }
+
+        .tns-ovh {
+            overflow: hidden;
+        }
+
+        .tns-visually-hidden {
+            position: absolute;
+            left: -10000em;
+        }
+
+        .tns-transparent {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .tns-fadeIn {
+            opacity: 1;
+            filter: alpha(opacity=100);
+            z-index: 0;
+        }
+
+        .tns-normal,
+        .tns-fadeOut {
+            opacity: 0;
+            filter: alpha(opacity=0);
+            z-index: -1;
+        }
+
+        .tns-vpfix {
+            white-space: nowrap;
+        }
+
+        .tns-vpfix>div,
+        .tns-vpfix>li {
+            display: inline-block;
+        }
+
+        .tns-t-subp2 {
+            margin: 0 auto;
+            width: 310px;
+            position: relative;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .tns-t-ct {
+            width: 2333.3333333333%;
+            width: calc(100% * 70 / 3);
+            position: absolute;
+            right: 0;
+        }
+
+        .tns-t-ct:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .tns-t-ct>div {
+            width: 1.4285714286%;
+            width: calc(100% / 70);
+            height: 10px;
+            float: left;
+        }
+    </style>
+    <style type="text/css">
+        /*
+ * Container style
+ */
+        .ps {
+            overflow: hidden !important;
+            overflow-anchor: none;
+            -ms-overflow-style: none;
+            touch-action: auto;
+            -ms-touch-action: auto;
+        }
+
+        /*
+ * Scrollbar rail styles
+ */
+        .ps__rail-x {
+            display: none;
+            opacity: 0;
+            transition: background-color .2s linear, opacity .2s linear;
+            -webkit-transition: background-color .2s linear, opacity .2s linear;
+            height: 15px;
+            /* there must be 'bottom' or 'top' for ps__rail-x */
+            bottom: 0px;
+            /* please don't change 'position' */
+            position: absolute;
+        }
+
+        .ps__rail-y {
+            display: none;
+            opacity: 0;
+            transition: background-color .2s linear, opacity .2s linear;
+            -webkit-transition: background-color .2s linear, opacity .2s linear;
+            width: 15px;
+            /* there must be 'right' or 'left' for ps__rail-y */
+            right: 0;
+            /* please don't change 'position' */
+            position: absolute;
+        }
+
+        .ps--active-x>.ps__rail-x,
+        .ps--active-y>.ps__rail-y {
+            display: block;
+            background-color: transparent;
+        }
+
+        .ps:hover>.ps__rail-x,
+        .ps:hover>.ps__rail-y,
+        .ps--focus>.ps__rail-x,
+        .ps--focus>.ps__rail-y,
+        .ps--scrolling-x>.ps__rail-x,
+        .ps--scrolling-y>.ps__rail-y {
+            opacity: 0.6;
+        }
+
+        .ps .ps__rail-x:hover,
+        .ps .ps__rail-y:hover,
+        .ps .ps__rail-x:focus,
+        .ps .ps__rail-y:focus,
+        .ps .ps__rail-x.ps--clicking,
+        .ps .ps__rail-y.ps--clicking {
+            background-color: #eee;
+            opacity: 0.9;
+        }
+
+        /*
+ * Scrollbar thumb styles
+ */
+        .ps__thumb-x {
+            background-color: #aaa;
+            border-radius: 6px;
+            transition: background-color .2s linear, height .2s ease-in-out;
+            -webkit-transition: background-color .2s linear, height .2s ease-in-out;
+            height: 6px;
+            /* there must be 'bottom' for ps__thumb-x */
+            bottom: 2px;
+            /* please don't change 'position' */
+            position: absolute;
+        }
+
+        .ps__thumb-y {
+            background-color: #aaa;
+            border-radius: 6px;
+            transition: background-color .2s linear, width .2s ease-in-out;
+            -webkit-transition: background-color .2s linear, width .2s ease-in-out;
+            width: 6px;
+            /* there must be 'right' for ps__thumb-y */
+            right: 2px;
+            /* please don't change 'position' */
+            position: absolute;
+        }
+
+        .ps__rail-x:hover>.ps__thumb-x,
+        .ps__rail-x:focus>.ps__thumb-x,
+        .ps__rail-x.ps--clicking .ps__thumb-x {
+            background-color: #999;
+            height: 11px;
+        }
+
+        .ps__rail-y:hover>.ps__thumb-y,
+        .ps__rail-y:focus>.ps__thumb-y,
+        .ps__rail-y.ps--clicking .ps__thumb-y {
+            background-color: #999;
+            width: 11px;
+        }
+
+        /* MS supports */
+        @supports (-ms-overflow-style: none) {
+            .ps {
+                overflow: auto !important;
+            }
+        }
+
+        @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+            .ps {
+                overflow: auto !important;
+            }
+        }
+    </style>
+    <style type="text/css">
+        /*!
+ * Bootstrap-select v1.13.18 (https://developer.snapappointments.com/bootstrap-select)
+ *
+ * Copyright 2012-2020 SnapAppointments, LLC
+ * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
+ */
+
+        @-webkit-keyframes bs-notify-fadeOut {
+            0% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-o-keyframes bs-notify-fadeOut {
+            0% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes bs-notify-fadeOut {
+            0% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        select.bs-select-hidden,
+        .bootstrap-select>select.bs-select-hidden,
+        select.selectpicker {
+            display: none !important;
+        }
+
+        .bootstrap-select {
+            width: 220px \0;
+            /*IE9 and below*/
+            vertical-align: middle;
+        }
+
+        .bootstrap-select>.dropdown-toggle {
+            position: relative;
+            width: 100%;
+            text-align: right;
+            white-space: nowrap;
+            display: -webkit-inline-box;
+            display: -webkit-inline-flex;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .bootstrap-select>.dropdown-toggle:after {
+            margin-top: -1px;
+        }
+
+        .bootstrap-select>.dropdown-toggle.bs-placeholder,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder:active {
+            color: #999;
+        }
+
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-primary,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-secondary,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-danger,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-info,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-dark,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-primary:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-secondary:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-danger:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-info:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-dark:hover,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-primary:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-secondary:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-danger:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-info:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-dark:focus,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-primary:active,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-secondary:active,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:active,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-danger:active,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-info:active,
+        .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-dark:active {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .bootstrap-select>select {
+            position: absolute !important;
+            bottom: 0;
+            left: 50%;
+            display: block !important;
+            width: 0.5px !important;
+            height: 100% !important;
+            padding: 0 !important;
+            opacity: 0 !important;
+            border: none;
+            z-index: 0 !important;
+        }
+
+        .bootstrap-select>select.mobile-device {
+            top: 0;
+            left: 0;
+            display: block !important;
+            width: 100% !important;
+            z-index: 2 !important;
+        }
+
+        .has-error .bootstrap-select .dropdown-toggle,
+        .error .bootstrap-select .dropdown-toggle,
+        .bootstrap-select.is-invalid .dropdown-toggle,
+        .was-validated .bootstrap-select select:invalid+.dropdown-toggle {
+            border-color: #b94a48;
+        }
+
+        .bootstrap-select.is-valid .dropdown-toggle,
+        .was-validated .bootstrap-select select:valid+.dropdown-toggle {
+            border-color: #28a745;
+        }
+
+        .bootstrap-select.fit-width {
+            width: auto !important;
+        }
+
+        .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+            width: 220px;
+        }
+
+        .bootstrap-select>select.mobile-device:focus+.dropdown-toggle,
+        .bootstrap-select .dropdown-toggle:focus {
+            outline: thin dotted #333333 !important;
+            outline: 5px auto -webkit-focus-ring-color !important;
+            outline-offset: -2px;
+        }
+
+        .bootstrap-select.form-control {
+            margin-bottom: 0;
+            padding: 0;
+            border: none;
+            height: auto;
+        }
+
+        :not(.input-group)>.bootstrap-select.form-control:not([class*="col-"]) {
+            width: 100%;
+        }
+
+        .bootstrap-select.form-control.input-group-btn {
+            float: none;
+            z-index: auto;
+        }
+
+        .form-inline .bootstrap-select,
+        .form-inline .bootstrap-select.form-control:not([class*="col-"]) {
+            width: auto;
+        }
+
+        .bootstrap-select:not(.input-group-btn),
+        .bootstrap-select[class*="col-"] {
+            float: none;
+            display: inline-block;
+            margin-left: 0;
+        }
+
+        .bootstrap-select.dropdown-menu-right,
+        .bootstrap-select[class*="col-"].dropdown-menu-right,
+        .row .bootstrap-select[class*="col-"].dropdown-menu-right {
+            float: right;
+        }
+
+        .form-inline .bootstrap-select,
+        .form-horizontal .bootstrap-select,
+        .form-group .bootstrap-select {
+            margin-bottom: 0;
+        }
+
+        .form-group-lg .bootstrap-select.form-control,
+        .form-group-sm .bootstrap-select.form-control {
+            padding: 0;
+        }
+
+        .form-group-lg .bootstrap-select.form-control .dropdown-toggle,
+        .form-group-sm .bootstrap-select.form-control .dropdown-toggle {
+            height: 100%;
+            font-size: inherit;
+            line-height: inherit;
+            border-radius: inherit;
+        }
+
+        .bootstrap-select.form-control-sm .dropdown-toggle,
+        .bootstrap-select.form-control-lg .dropdown-toggle {
+            font-size: inherit;
+            line-height: inherit;
+            border-radius: inherit;
+        }
+
+        .bootstrap-select.form-control-sm .dropdown-toggle {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .bootstrap-select.form-control-lg .dropdown-toggle {
+            padding: 0.5rem 1rem;
+        }
+
+        .form-inline .bootstrap-select .form-control {
+            width: 100%;
+        }
+
+        .bootstrap-select.disabled,
+        .bootstrap-select>.disabled {
+            cursor: not-allowed;
+        }
+
+        .bootstrap-select.disabled:focus,
+        .bootstrap-select>.disabled:focus {
+            outline: none !important;
+        }
+
+        .bootstrap-select.bs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0 !important;
+            padding: 0 !important;
+        }
+
+        .bootstrap-select.bs-container .dropdown-menu {
+            z-index: 1060;
+        }
+
+        .bootstrap-select .dropdown-toggle .filter-option {
+            position: static;
+            top: 0;
+            left: 0;
+            float: left;
+            height: 100%;
+            width: 100%;
+            text-align: left;
+            overflow: hidden;
+            -webkit-box-flex: 0;
+            -webkit-flex: 0 1 auto;
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+        }
+
+        .bs3.bootstrap-select .dropdown-toggle .filter-option {
+            padding-right: inherit;
+        }
+
+        .input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option {
+            position: absolute;
+            padding-top: inherit;
+            padding-bottom: inherit;
+            padding-left: inherit;
+            float: none;
+        }
+
+        .input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option .filter-option-inner {
+            padding-right: inherit;
+        }
+
+        .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+            overflow: hidden;
+        }
+
+        .bootstrap-select .dropdown-toggle .filter-expand {
+            width: 0 !important;
+            float: left;
+            opacity: 0 !important;
+            overflow: hidden;
+        }
+
+        .bootstrap-select .dropdown-toggle .caret {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            margin-top: -2px;
+            vertical-align: middle;
+        }
+
+        .input-group .bootstrap-select.form-control .dropdown-toggle {
+            border-radius: inherit;
+        }
+
+        .bootstrap-select[class*="col-"] .dropdown-toggle {
+            width: 100%;
+        }
+
+        .bootstrap-select .dropdown-menu {
+            min-width: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .bootstrap-select .dropdown-menu>.inner:focus {
+            outline: none !important;
+        }
+
+        .bootstrap-select .dropdown-menu.inner {
+            position: static;
+            float: none;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            border-radius: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .bootstrap-select .dropdown-menu li {
+            position: relative;
+        }
+
+        .bootstrap-select .dropdown-menu li.active small {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .bootstrap-select .dropdown-menu li.disabled a {
+            cursor: not-allowed;
+        }
+
+        .bootstrap-select .dropdown-menu li a {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .bootstrap-select .dropdown-menu li a.opt {
+            position: relative;
+            padding-left: 2.25em;
+        }
+
+        .bootstrap-select .dropdown-menu li a span.check-mark {
+            display: none;
+        }
+
+        .bootstrap-select .dropdown-menu li a span.text {
+            display: inline-block;
+        }
+
+        .bootstrap-select .dropdown-menu li small {
+            padding-left: 0.5em;
+        }
+
+        .bootstrap-select .dropdown-menu .notify {
+            position: absolute;
+            bottom: 5px;
+            width: 96%;
+            margin: 0 2%;
+            min-height: 26px;
+            padding: 3px 5px;
+            background: #f5f5f5;
+            border: 1px solid #e3e3e3;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            pointer-events: none;
+            opacity: 0.9;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .bootstrap-select .dropdown-menu .notify.fadeOut {
+            -webkit-animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+            -o-animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+            animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+        }
+
+        .bootstrap-select .no-results {
+            padding: 3px;
+            background: #f5f5f5;
+            margin: 0 5px;
+            white-space: nowrap;
+        }
+
+        .bootstrap-select.fit-width .dropdown-toggle .filter-option {
+            position: static;
+            display: inline;
+            padding: 0;
+        }
+
+        .bootstrap-select.fit-width .dropdown-toggle .filter-option-inner,
+        .bootstrap-select.fit-width .dropdown-toggle .filter-option-inner-inner {
+            display: inline;
+        }
+
+        .bootstrap-select.fit-width .dropdown-toggle .bs-caret:before {
+            content: '\A0';
+        }
+
+        .bootstrap-select.fit-width .dropdown-toggle .caret {
+            position: static;
+            top: auto;
+            margin-top: -1px;
+        }
+
+        .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+            position: absolute;
+            display: inline-block;
+            right: 15px;
+            top: 5px;
+        }
+
+        .bootstrap-select.show-tick .dropdown-menu li a span.text {
+            margin-right: 34px;
+        }
+
+        .bootstrap-select .bs-ok-default:after {
+            content: '';
+            display: block;
+            width: 0.5em;
+            height: 1em;
+            border-style: solid;
+            border-width: 0 0.26em 0.26em 0;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .bootstrap-select.show-menu-arrow.open>.dropdown-toggle,
+        .bootstrap-select.show-menu-arrow.show>.dropdown-toggle {
+            z-index: 1061;
+        }
+
+        .bootstrap-select.show-menu-arrow .dropdown-toggle .filter-option:before {
+            content: '';
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid rgba(204, 204, 204, 0.2);
+            position: absolute;
+            bottom: -4px;
+            left: 9px;
+            display: none;
+        }
+
+        .bootstrap-select.show-menu-arrow .dropdown-toggle .filter-option:after {
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid white;
+            position: absolute;
+            bottom: -4px;
+            left: 10px;
+            display: none;
+        }
+
+        .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle .filter-option:before {
+            bottom: auto;
+            top: -4px;
+            border-top: 7px solid rgba(204, 204, 204, 0.2);
+            border-bottom: 0;
+        }
+
+        .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle .filter-option:after {
+            bottom: auto;
+            top: -4px;
+            border-top: 6px solid white;
+            border-bottom: 0;
+        }
+
+        .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle .filter-option:before {
+            right: 12px;
+            left: auto;
+        }
+
+        .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle .filter-option:after {
+            right: 13px;
+            left: auto;
+        }
+
+        .bootstrap-select.show-menu-arrow.open>.dropdown-toggle .filter-option:before,
+        .bootstrap-select.show-menu-arrow.show>.dropdown-toggle .filter-option:before,
+        .bootstrap-select.show-menu-arrow.open>.dropdown-toggle .filter-option:after,
+        .bootstrap-select.show-menu-arrow.show>.dropdown-toggle .filter-option:after {
+            display: block;
+        }
+
+        .bs-searchbox,
+        .bs-actionsbox,
+        .bs-donebutton {
+            padding: 4px 8px;
+        }
+
+        .bs-actionsbox {
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .bs-actionsbox .btn-group button {
+            width: 50%;
+        }
+
+        .bs-donebutton {
+            float: left;
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .bs-donebutton .btn-group button {
+            width: 100%;
+        }
+
+        .bs-searchbox+.bs-actionsbox {
+            padding: 0 8px 4px;
+        }
+
+        .bs-searchbox .form-control {
+            margin-bottom: 0;
+            width: 100%;
+            float: none;
+        }
+    </style>
+    <script src="assets/js/demo_like5883.js?v=7.2.9" type="application/javascript"></script>
+    <script src="assets/plugins/highlight.js/lib/highlight.js" type="application/javascript"></script>
+    <script src="assets/plugins/highlight.js/build/highlight.pack.js" type="application/javascript"></script>
+    <script src="assets/js/docs5883.js?v=7.2.9" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+
+
+
+    <style>
+        @media (max-width: 584px) {
+            .table {
+                width: 110%;
+            }
+        }
+
+        @media (max-width: 542px) {
+            .table {
+                width: 125%;
+            }
+        }
+
+        @media (max-width: 490px) {
+            .table {
+                width: 150%;
+            }
+        }
+
+
+        @media (max-width: 430px) {
+            .table {
+                width: 170%;
+            }
+        }
+
+        @media (max-width: 395px) {
+            .table {
+                width: 200%;
+            }
+        }
+
+        @media (max-width: 355px) {
+            .table {
+                width: 225%;
+            }
+        }
+
+        @media (max-width: 325px) {
+            .table {
+                width: 250%;
+            }
+        }
+
+        @media (max-width: 305px) {
+            .table {
+                width: 275%;
+            }
+        }
+
+        @media (max-width: 285px) {
+            .table {
+                width: 300%;
+            }
+        }
+
+
+        @media (max-width: 265px) {
+            .table {
+                width: 325%;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://cdn-web-v2.vietcetera.com/static/fonts/PoppinsVN-WOFF2/PoppinsVN-400.woff2) format('woff2');
+            unicode-range: U+1EBF, U+1EC5, U+1ECB, U+1EE5, U+1EDB, U+1ED1, U+1EA1, U+00F4, U+1EAF, U+1EA7, U+1EEB, U+1EDD, U+01B0, U+1EA3, U+1EC7, U+1ED9, U+0069, U+1EE7, U+1EBB, U+1EE3, U+1EED, U+1EB5, U+1EDF, U+01A1, U+1EC9, U+1ED5
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://cdn-web-v2.vietcetera.com/static/fonts/PoppinsVN-WOFF2/PoppinsVN-500.woff2) format('woff2');
+            unicode-range: U+1EBF, U+1EC5, U+1ECB, U+1EE5, U+1EDB, U+1ED1, U+1EA1, U+00F4, U+1EAF, U+1EA7, U+1EEB, U+1EDD, U+01B0, U+1EA3, U+1EC7, U+1ED9, U+0069, U+1EE7, U+1EBB, U+1EE3, U+1EED, U+1EB5, U+1EDF, U+01A1, U+1EC9, U+1ED5
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            src: url(https://cdn-web-v2.vietcetera.com/static/fonts/PoppinsVN-WOFF2/PoppinsVN-600.woff2) format('woff2');
+            unicode-range: U+1EBF, U+1EC5, U+1ECB, U+1EE5, U+1EDB, U+1ED1, U+1EA1, U+00F4, U+1EAF, U+1EA7, U+1EEB, U+1EDD, U+01B0, U+1EA3, U+1EC7, U+1ED9, U+0069, U+1EE7, U+1EBB, U+1EE3, U+1EED, U+1EB5, U+1EDF, U+01A1, U+1EC9, U+1ED5
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            src: url(https://cdn-web-v2.vietcetera.com/static/fonts/PoppinsVN-WOFF2/PoppinsVN-700.woff2) format('woff2');
+            unicode-range: U+1EBF, U+1EC5, U+1ECB, U+1EE5, U+1EDB, U+1ED1, U+1EA1, U+00F4, U+1EAF, U+1EA7, U+1EEB, U+1EDD, U+01B0, U+1EA3, U+1EC7, U+1ED9, U+0069, U+1EE7, U+1EBB, U+1EE3, U+1EED, U+1EB5, U+1EDF, U+01A1, U+1EC9, U+1ED5
+        }
+    </style>
+
+
+
+    <style type="text/css">
+        @font-face {
+            font-family: Roboto;
+            src: url("chrome-extension://mcgbeeipkmelnpldkobichboakdfaeon/css/Roboto-Regular.ttf");
+        }
+    </style>
+</head>
+
+<body class="header-enabled header-inverse">
+    <div class="wrapper">
+        <section class="subheader bgi-size-cover bg-transparent bgi-position-x-center bgi-position-y-bottom"
+            style="background-image:url('https://preview.keenthemes.com/keen/demo6/assets/media/misc/page-bg.png')">
+            <header id="site_header" class="header header-inner">
+                <div class="container d-flex justify-content-between align-items-stretch">
+                    <div class="d-flex align-items-center">
+                        <a href="/" class="header-brand mr-3 mr-lg-25">
+                            <img alt="logo" src="{{ settings.logo }}" class="logo-white h-50px h-md-50px">
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-end flex-lg-grow-1 align-items-stretch">
+                        <ul class="topbar d-flex align-items-stretch">
+                            <li class="topbar-wrapper d-flex align-items-stretch">
+                                <div class="topbar-item mr-5 mr-md-7 d-none d-sm-flex border-bottom border-primary">
+                                    <a href="/"
+                                        class="font-weight-bold font-size-3 font-size-md-base text-primary text-hover-primary">
+                                        Trang Chủ
+                                    </a>
+                                </div>
+                                {{#each settings.contact}}
+                                <div class="topbar-item mr-5 mr-md-7 d-none d-sm-flex">
+                                    <a href="{{ this.url }}"
+                                        class="font-weight-bold font-size-3 font-size-md-base text-dark-50 text-hover-primary">
+                                        {{{ this.html }}}
+                                    </a>
+                                </div>
+                                {{/each}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div class="position-relative overflow-hidden">
+                <div class="container">
+                    <div class="d-flex flex-column align-items-center content-justify-center p-15 p-lg-20 mb-15">
+                        <!-- <img alt="logo" src="assets/images/logos/logo-metronic.svg" class="mb-10 h-75px h-md-100px"> -->
+                        <div
+                            class="text-center text-white line-height-lg letter-spacing-sm font-weight-bolder font-size-7 font-size-md-10 mb-7 mb-lg-8">
+                            Hệ Thống
+                            <span
+                                style="background: linear-gradient(to right, #12CE5D 0%, #189EFF 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">Chẵn
+                                Lẻ MOMO Top 1 VN</span>
+                            <br />Trả Thưởng Siêu Tốc
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container mt-lg-n22 mt-n28 mb-10 mb-lg-15">
+            <div class="card bg-white border-0 shadow rounded-lg">
+                <div class="d-flex align-items-center justify-content-center flex-wrap px-5 py-5 px-md-10 py-md-9"
+                    id="list-game">
+                    {{#each games}}
+
+                    <button
+                        class="btn btn-lg btn-light-hover btn-{{#ifCond @index '==' 0}}primary{{else}}default{{/ifCond}} px-3 px-md-6 mr-1 mr-md-2 games"
+                        data-name="{{ this.name }}" data-description="{{ this.description }}"
+                        data-type="{{ this.gameType }}" type="{{ this.gameType }}"><a>
+                            {{ this.name }}
+                        </a>
+                    </button>
+                    {{/each}}
+
+                    <a class="btn btn-lg btn-light-hover btn px-3 px-md-6 mr-1 mr-md-2" href="#events">
+                        Events
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--begin Section -->
+        <section class="container-fluid px-xxl-30" id="how_to_play">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6 game_card" card_id="chanle">
+                    <div class="card border-0 shadow mb-12 mx-3">
+                        <div class="card-body">
+                            <div class="card-title d-flex flex-column align-items-center flex-wrap mb-1">
+                                <h3 id="gameName">Cách Chơi</h3>
+                                <span class="font-weight-bold font-size-3 text-dark-60">
+                                    <div class="alert alert-warning" role="alert">
+                                        <b>Chú ý 🔞:</b> Mini game chỉ dành cho người <b>trên 18 tuổi</b>.
+                                    </div>
+                                    <p>Chuyển tiền vào 1 trong các tài khoản MOMO sau:</p>
+                                </span>
+
+                                <div class="table-responsive">
+                                    <table class="table table-row-bordered gy-5">
+                                        <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                <th class="table-sort-desc text-center">Số Điện Thoại</th>
+                                                <th class="table-sort-desc text-center">Tối thiểu </th>
+                                                <th class="table-sort-desc text-center">Tối đa </th>
+                                                <th class="table-sort-asc text-center">Trạng thái</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tablePhone"></tbody>
+                                    </table>
+                                </div>
+                                <p class="mt-3" id="gameNoti"></p>
+                                <div class="table-responsive">
+                                    <table class="table table-row-bordered gy-5">
+                                        <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                <th class="table-sort-asc text-center">Nội dung</th>
+                                                <th class="table-sort-asc text-center">Kết quả</th>
+                                                <th class="table-sort-asc text-center">Tỉ lệ</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableReward"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="position-relative">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-6">
+                    <div class="card border-0 shadow mb-12 mx-3">
+                        <div class="card-body ">
+                            <div class="card-title flex-column align-items-center flex-wrap mb-1">
+                                <h5 class="font-weight-bolder flex-grow-1 pl-0 text-center mr-1 mb-4">Kiếm Tra<span
+                                        class="text-muted font-weight-bold"> Mã Giao Dịch</span></h5>
+                                <br>
+                                <div class="alert alert-info text-left">
+                                    {{{ settings.checkTransId.noti }}}
+                                </div>
+                                <div class="text-center">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="">Nhập mã giao dịch</label>
+                                            <div class="d-flex mb-10" id="checkTransId">
+                                                <input type="number" class="form-control form-control-solid"
+                                                    name="transId" placeholder="Mã giao dịch">
+                                                <button class="btn btn-light-primary fw-bold flex-shrink-0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-arrow-right">
+                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                                    </svg></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: none;">
+                                        <div class="form-group">
+                                            <label for="">Nhập mã giao dịch</label>
+                                            <div class="d-flex mb-10" id="checkByPhone">
+                                                <input type="number" class="form-control" name="transId"
+                                                    placeholder="Mã giao dịch">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Số điện thoại web nhận tiền</label>
+                                            <input type="number" class="form-control" name="phone"
+                                                placeholder="Số điện thoại bạn chuyển tiền vào">
+                                        </div>
+                                        <button class="btn btn-light-primary fw-bold flex-shrink-0"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-arrow-right">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                <polyline points="12 5 19 12 12 19"></polyline>
+                                            </svg></button>
+                                    </div>
+                                    <div id="transId-result" style="margin-top: 5px;"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    </div>
+    </section>
+
+    <!--end Section -->
+    <div class="block-dark">
+        <div
+            class="h-100px h-lg-225px bgi-no-repeat bgi-position-x-center bgi-position-y-top bgi-size-cover dark-top-curved-bg">
+        </div>
+        <div class="container pb-20 mt-n17">
+            <div class="text-center mb-10 mb-lg-17">
+                <h1
+                    class="text-white line-height-md  letter-spacing-nsm  font-weight-bolder font-size-13 font-size-lg-23 mb-3 mb-lg-3">
+
+                    <span
+                        style="background: linear-gradient(to right, #12CE5D 0%, #189EFF 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+                        <span id="kt_landing_hero_text">Lịch sử thắng</span>
+                    </span>
+                </h1>
+                <p class="badge badge-danger"
+                    style="cursor: pointer; display: inline-block; width: 150px; font-size: 15px; margin-bottom: 5px;">
+                    <i class="fa fa-clock-o"></i> Millisecond:<br><span id="millis"></span>
+                </p>
+                <script>const millisSpan = document.getElementById("millis"); function updateMillis() { var i = Date.now(); millisSpan.innerHTML = i } setInterval(updateMillis, 1)</script>
+                <div class="font-weight-bold font-size-3 text-dark-60">
+                    (Cập nhật tự động)
+
+                </div>
+            </div>
+            <div
+                class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between mb-5 mx-auto w-xl-900px gradient">
+                <div class="table-responsive table-white ">
+                    <table class="table table-rounded table-striped border">
+                        <thead>
+
+                            <tr class="fw-bold fs-6 text-gray-800">
+                                <th class="text-center">
+                                    Số điện thoại
+                                </th>
+                                <th class="text-center">
+                                    Mã giao dịch
+                                </th>
+                                <th class="text-center">
+                                    Tiền đặt
+                                </th>
+                                <th class="text-center">
+                                    Nội dung
+                                </th>
+                                <th class="text-center">
+                                    Trạng thái
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableHistory">
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="mt-n5 mt-xl-n10 mt-xxl-n13" id="events">
+        <div
+            class="h-150px h-lg-200px bgi-no-repeat bgi-position-x-center bgi-position-y-top bgi-size-contain white-bottom-curved-bg">
+        </div>
+        <div class="container mt-n33">
+            <div class="text-center mb-10 mb-lg-22">
+                <h1
+                    class="text-dark line-height-md font-weight-bolder  letter-spacing-nsm font-size-13 font-size-lg-23 mb-5 mb-lg-8">
+                    Các Event
+
+                    <span
+                        style="background: linear-gradient(to right, #CE1212 0%, #6218FF 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+                        <span id="kt_landing_hero_text">Siêu Hấp Dẫn</span>
+                    </span>
+                </h1>
+                <div class="font-weight-bold font-size-3 text-dark-60">
+                    Có thể bạn chưa biết, ngoài các game thì {{ title }} còn có các sự kiện như Top Ngày, Điểm Danh,
+                    Nhiệm Vụ Ngày, Quà Sự Kiện,...vv
+                </div>
+            </div>
+            <div class="technologies-block mb-10">
+                <ul class="nav nav-tabs nav-justified mb-8" role="tablist">
+                    <li class="nav-item my-2 mr-5">
+                        <div class="nav-link flex-shrink-0 active" data-target="#kt_technology_bootstrap"
+                            data-toggle="tab" role="tab" aria-selected="true">
+                            <div class="mr-4">
+                                <img src="https://img.icons8.com/fluency/512/hand-drawn-star.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/gray/bootstrap.png"
+                                    class="max-h-30px logo-default loaded" alt="">
+                                <img src="https://img.icons8.com/fluency/512/enter-2.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/Bootstrap.png"
+                                    class="max-h-30px logo-active loaded" alt="">
+                            </div>
+                            <h3 class="nav-text font-size-6 font-weight-bolder flex-shrink-0 mb-0">
+                                Điểm Danh
+                            </h3>
+                        </div>
+                    </li>
+                    <li class="nav-item my-2 mr-5">
+                        <div class="nav-link flex-shrink-0" data-target="#kt_technology_vuejs" data-toggle="tab"
+                            role="tab" aria-selected="false">
+                            <div class="mr-4">
+                                <img src="https://img.icons8.com/cute-clipart/512/goal.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/gray/vuejs.png"
+                                    class="max-h-30px logo-default loaded" alt="">
+                                <img src="https://img.icons8.com/color/512/mission-of-a-company.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/VueJS.png"
+                                    class="max-h-30px logo-active loaded" alt="">
+                            </div>
+                            <h3 class="nav-text font-size-6 font-weight-bolder flex-shrink-0 mb-0">
+                                Nhiệm Vụ Ngày
+                            </h3>
+                        </div>
+                    </li>
+                    <li class="nav-item my-2 mr-5">
+                        <div class="nav-link flex-shrink-0" data-target="#kt_technology_react" data-toggle="tab"
+                            role="tab" aria-selected="false">
+                            <div class="mr-4">
+                                <img src="https://img.icons8.com/cute-clipart/512/gift.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/gray/react.png"
+                                    class="max-h-30px logo-default loaded" alt="">
+                                <img src="https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/512/external-gift-christmas-vitaliy-gorbachev-flat-vitaly-gorbachev.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/React.png"
+                                    class="max-h-30px logo-active loaded" alt="">
+                            </div>
+                            <h3 class="nav-text font-size-6 font-weight-bolder flex-shrink-0 mb-0">
+                                Giftcode
+                            </h3>
+                        </div>
+                    </li>
+                    {{#if jackpot}}
+                    <li class="nav-item my-2 mr-5">
+                        <div class="nav-link flex-shrink-0" data-target="#jackpottab" data-toggle="tab" role="tab"
+                            aria-selected="false">
+                            <div class="mr-4">
+                                <img src="https://img.icons8.com/cute-clipart/512/gift.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/gray/react.png"
+                                    class="max-h-30px logo-default loaded" alt="">
+                                <img src="https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/512/external-gift-christmas-vitaliy-gorbachev-flat-vitaly-gorbachev.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/React.png"
+                                    class="max-h-30px logo-active loaded" alt="">
+                            </div>
+                            <h3 class="nav-text font-size-6 font-weight-bolder flex-shrink-0 mb-0">
+                                Nổ hũ
+                            </h3>
+                        </div>
+                    </li>
+                    {{/if}}
+
+                    <li class="nav-item my-2 mr-5">
+                        <div class="nav-link flex-shrink-0" data-target="#kt_technology_top" data-toggle="tab"
+                            role="tab" aria-selected="false">
+                            <div class="mr-4">
+                                <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/512/external-award-event-management-flaticons-lineal-color-flat-icons-3.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/gray/react.png"
+                                    class="max-h-30px logo-default loaded" alt="">
+                                <img src="https://img.icons8.com/external-vectorslab-flat-vectorslab/512/external-Leaderboard-seo-and-marketing-vectorslab-flat-vectorslab.png"
+                                    data-lazy-src="https://keenthemes.com/images/features-logos/React.png"
+                                    class="max-h-30px logo-active loaded" alt="">
+                            </div>
+                            <h3 class="nav-text font-size-6 font-weight-bolder flex-shrink-0 mb-0">
+                                Top {{#ifCond settings.topData.typeTOP '==' 'day'}}ngày{{else}}tuần{{/ifCond}}
+                            </h3>
+                        </div>
+                    </li>
+
+                </ul>
+                <div class="tab-content mb-4 mb-lg-5">
+                    <div class="tab-pane fade active show" id="kt_technology_bootstrap" role="tabpanel">
+                        <div class="col-lg-12 col-xl-12 event_card" card_id="diem_danh">
+                            <div class="card border-0 shadow mb-12 mx-3">
+                                <div class="card-body">
+                                    <div class="card-title d-flex flex-column align-items-center flex-wrap mb-1"
+                                        text-center="">
+                                        <h5 class="font-weight-bolder flex-grow-1 pl-0 text-center mr-1 mb-4">Điểm
+                                            Danh<span class="text-muted font-weight-bold"> - Nhận quà miễn phí</span>
+                                        </h5>
+
+                                        <span class="font-weight-bold font-size-3 text-dark-60 diem_danh __card">
+
+                                            - Mã quà: <span class="font-weight-bolder diem_danh _id"
+                                                style="background: linear-gradient(to right, #CE1212 0%, #6218FF 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;"
+                                                id="muster-session">xxxx</span><br>
+
+                                            - Giá trị: <span class="diem_danh min">{{ numberFormat settings.muster.min
+                                                }}</span> ~ <span class="diem_danh max">{{ numberFormat
+                                                settings.muster.max }}</span> vnđ<br>
+                                            - <span class="muster-count">9999</span> Người <br>
+                                            - Quay thưởng sau: <span class="muster-time">0</span> giây <br>
+                                            - Tổng tiền đã trao: <span class="muster-bonus">0</span>đ <br>
+                                            <br>
+                                        </span>
+                                        <div id="addMuster">
+                                            <div class="form-group box-info">
+                                                <label for="">Số điện thoại:</label>
+                                                <div class="d-flex mb-10">
+                                                    <input type="text" class="form-control" name="phone"
+                                                        placeholder="094xxxxxxx">
+                                                    <br>
+                                                    <button class="btn btn-light-primary fw-bold flex-shrink-0"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" class="feather feather-arrow-right">
+                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                                        </svg></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <ul class="nav nav-tabs nav-justified mb-8" role="tablist">
+                                            <li class="nav-item my-2 mr-5">
+                                                <div class="nav-link flex-shrink-0 active" data-target="#diem_danh1"
+                                                    data-toggle="tab" role="tab" aria-selected="true">
+
+                                                    <h5
+                                                        class="nav-text font-size-4 font-weight-bolder flex-shrink-0 mb-0 text-primary">
+                                                        Cách Chơi
+                                                    </h5>
+                                                </div>
+                                            </li>
+                                            <li class="nav-item my-2 mr-5">
+                                                <div class="nav-link flex-shrink-0" data-target="#muster-history"
+                                                    data-toggle="tab" role="tab" aria-selected="false">
+
+                                                    <h5
+                                                        class="nav-text font-size-4 font-weight-bolder flex-shrink-0 mb-0 text-primary">
+                                                        Lịch Sử
+                                                    </h5>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mb-4 mb-lg-5">
+
+                                            <div class="tab-pane fade active show" id="diem_danh1" role="tabpanel">
+                                                <span class="font-weight-bold font-size-3 text-dark-60"
+                                                    id="muster-guide">
+                                                    {{{ settings.muster.noti }}}
+                                                </span>
+                                            </div>
+                                            <div class="tab-pane fade hide" id="muster-history" role="tabpanel">
+                                                <div class="table-responsive table-white">
+                                                    <table class="table table-rounded table-striped border">
+                                                        <thead>
+
+                                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                                <th class="text-center">
+                                                                    Mã phiên
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Tổng
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    SĐT
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    Thưởng
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tableMuster"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="position-relative">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade hide" id="kt_technology_vuejs" role="tabpanel">
+                        <div class="col-lg-12 col-xl-12 event_card" card_id="day_mission">
+                            <div class="card border-0 shadow mb-12 mx-3">
+                                <div class="card-body">
+                                    <div
+                                        class="card-title d-flex flex-column align-items-center flex-wrap mb-1 text-center">
+                                        <h5 class="font-weight-bolder flex-grow-1 pl-0 text-center mr-1 mb-4">Nhiệm Vụ
+                                            Ngày<span class="text-muted font-weight-bold"> - Nhận quà miễn phí</span>
+                                        </h5>
+
+                                        <span class="font-weight-bold font-size-3 text-dark-60 mb-1">Nhập số điện thoại
+                                            của bạn để nhận thưởng:</span>
+                                        <br>
+                                        <div id="checkMission">
+                                            <div class="form-group box-info">
+                                                <label for="">Số điện thoại:</label>
+                                                <div class="d-flex mb-10">
+                                                    <input type="number" class="form-control" name="phone"
+                                                        placeholder="094xxxxxxx">
+                                                    <button class="btn btn-light-primary fw-bold flex-shrink-0"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" class="feather feather-arrow-right">
+                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                                        </svg></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <span class="font-weight-bold font-size-3 text-dark-60 mb-3">
+                                            - Thật tuyệt vời! Mỗi ngày chỉ cần chơi trên {{ title }} thì bạn chắc chắn
+                                            bạn sẽ nhận được tiền thưởng.<br>
+                                            - Nhập vào số điện thoại của bạn để kiểm tra số tiền đã chơi.<br>
+                                            - Khi chơi đủ mốc tiền, hệ thống sẽ tự chuyển vào số điện thoại của bạn với
+                                            các mốc thưởng như sau:</span>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-row-bordered gy-5">
+                                                <thead>
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <th class="table-sort-desc text-center">Mốc chơi</th>
+                                                        <th class="table-sort-desc text-center">Thưởng</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{#each settings.missionData.data}}
+                                                    <tr>
+                                                        <td
+                                                            class="text-center font-weight-bold font-size-2 text-primary">
+                                                            {{ numberFormat this.amount }}</td>
+                                                        <td
+                                                            class="text-center font-weight-bold font-size-2 text-dark-60">
+                                                            {{ numberFormat this.bonus }}đ</td>
+                                                    </tr>
+                                                    {{/each}}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="position-relative">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade hide" id="kt_technology_react" role="tabpanel">
+                        <div class="col-lg-12 col-xl-12 event_card" card_id="day_mission">
+                            <div class="card border-0 shadow mb-12 mx-3">
+                                <div class="card-body">
+                                    <div
+                                        class="card-title d-flex flex-column align-items-center flex-wrap mb-1 text-center">
+                                        <h5 class="font-weight-bolder flex-grow-1 pl-0 text-center mr-1 mb-4">
+                                            Giftcode<span class="text-muted font-weight-bold"> - Nhận quà miễn
+                                                phí</span></h5>
+
+                                        <span class="font-weight-bold font-size-3 text-dark-60 mb-1">Nhập số điện thoại
+                                            và giftcode của bạn để nhận thưởng:</span>
+
+                                        <br>
+
+                                        <div id="checkGift">
+                                            <div class="form-group box-info">
+                                                <div class="mb-3">
+                                                    <input type="number" name="phone"
+                                                        class="form-control form-control-solid"
+                                                        placeholder="Số điện thoại">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="text" name="code"
+                                                        class="form-control form-control-solid" placeholder="Giftcode">
+                                                </div>
+                                                <br>
+                                                <button class="btn btn-light-primary fw-bold flex-shrink-0"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-arrow-right">
+                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                                    </svg></button>
+                                            </div>
+                                        </div>
+                                        <div class="box-success">
+                                            {{{ settings.giftCode.noti }}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade hide" id="kt_technology_top" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1
+                                    class="text-dark line-height-md font-weight-bolder text-center letter-spacing-nsm font-size-13 font-size-lg-23 mb-5 mb-lg-8">
+                                    <p>️🏆 TOP {{#ifCond settings.topData.typeTOP '=='
+                                        'day'}}NGÀY{{else}}TUẦN{{/ifCond}} 🏆</p>
+                                </h1>
+                                <div class="table-responsive">
+                                    <table class="table table-row-bordered gy-5">
+                                        <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                <th class="table-sort-desc text-center">Vị trí</th>
+                                                <th class="table-sort-desc text-center">Số điện thoại</th>
+                                                <th class="table-sort-desc text-center">Số tiền</th>
+                                                <th class="table-sort-desc text-center">Phần thưởng</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each tops}}
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span class="badge rounded-pill bg-danger text-white">{{sum @index
+                                                        1}}</span>
+                                                </td>
+                                                <td class="text-center"> <span
+                                                        class="font-weight-bold font-size-3 text-dark-60">{{ this.phone
+                                                        }} </span>
+                                                </td>
+                                                <td class="text-center"> <span
+                                                        class="font-weight-bold font-size-3 text-dark-60">{{
+                                                        numberFormat this.amount }}</span>
+                                                </td>
+                                                <td class="text-center"> <span
+                                                        class="font-weight-bold font-size-3 text-dark-60">{{
+                                                        numberFormat this.bonus }}</span>
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade hide" id="jackpottab" role="tabpanel">
+                        <div class="col-lg-12 col-xl-12 event_card" card_id="jackpottab">
+                            <div class="card border-0 shadow mb-12 mx-3">
+                                <div class="card-body">
+                                    <div
+                                        class="card-title d-flex flex-column align-items-center flex-wrap mb-1 text-center">
+                                        <h5 class="font-weight-bolder flex-grow-1 pl-0 text-center mr-1 mb-4">
+                                            Săn Hũ Cùng {{ settings.nameSite }}</h5>
+
+                                        <font color="blue"><big><b></b></big></font>
+                                        <br>
+                                        <div id="jackpot">
+                                            <div class="form-group box-info">
+                                                <label for="">Số điện thoại:</label>
+                                                <input type="number" name="phone" class="form-control"
+                                                    placeholder="0386966xxx">
+                                                <small class="form-text">Nhập số điện thoại của bạn để tham gia.</small>
+                                                <br>
+                                                <button class="btn btn-success">Tham Gia </button>
+                                            </div>
+                                        </div>
+                                        <div class="box-info">
+                                            <img src="{{ public }}/images/ruong.gif" width="100px">
+                                            {{{ settings.jackpot.noti }}}
+                                            <h5 class="text-red">Tiền còn trong hũ: <b
+                                                    class="text-blue jackpot-amount"><span>{{ numberFormat
+                                                        settings.jackpotCount }}</span> VNĐ</b></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <div class="container positon-relative pt-10 zindex-1">
+        <div class="d-flex align-items-stretch justify-content-between flex-wrap flex-md-nowrap rounded-lg shadow position-relative zindex-2"
+            style="background: linear-gradient(90deg, #20AA3E 0%, #03A588 100%); ">
+            <!--begin::Content-->
+            <div class="d-flex flex-column justify-content-start align-items-sta rt my-2 me-5 px-10 pt-6 pb-0 p-lg-10">
+                <!--begin::Title-->
+                <div class="font-size-8 font-size-lg-14 text-white mb-2">
+                    <span class="font-weight-bolder">Trả thưởng siêu nhanh,</span>
+                    <span class="font-weight-light">Tỉ lệ siêu cao</span>
+                </div>
+                <!--end::Title-->
+                <!--begin::Description-->
+                <div class="font-size-4 font-weight-normal text-white opacity-75" style="color: #A8EAC9">
+                    Còn chần chừ gì nữa mà không chơi ngay nào?
+                </div>
+                <!--end::Description-->
+            </div>
+            <!--end::Content-->
+            <div class="subscribe-form d-flex align-items-center m-0 bgi-no-repeat bgi-position-y-bottom bgi-position-x-right p-8 p-lg-12"
+                style="background-image:url('./{{ public }}/images/misc/mail.svg">
+                <form class="validate position-relative m-0"
+                    action="https://keenthemes.us3.list-manage.com/subscribe/post?u=b10f23244c11e2946463ea844&amp;id=3aba0b6220"
+                    method="post" target="_blank" novalidate="">
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                        <input type="text" name="b_b10f23244c11e2946463ea844_3aba0b6220" tabindex="-1" value="">
+                    </div>
+                    <input type="email" class="form-control form-control-lg w-250px w-lg-350px pr-10 font-size-base"
+                        name="EMAIL" placeholder="Enter Email to Stay Updated">
+                    <button class="btn btn-icon mr-2" type="submit">
+                        <span class="svg-icon svg-icon-md2 svg-icon-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="">
+                                <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+                                <title>Stockholm-icons / Navigation / Arrow-right</title>
+                                <desc>Created with Sketch.</desc>
+                                <defs></defs>
+                                <g id="Stockholm-icons-/-Navigation-/-Arrow-right" stroke="none" stroke-width="1"
+                                    fill="none" fill-rule="evenodd">
+                                    <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                                    <rect id="Rectangle" fill="#000000" opacity="0.3"
+                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                        x="11" y="5" width="2" height="14" rx="1"></rect>
+                                    <path
+                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                        id="Path-94" fill="#000000" fill-rule="nonzero"
+                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) ">
+                                    </path>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer block-dark mt-n15 mt-lg-n30">
+        <div
+            class="h-150px h-lg-225px bgi-no-repeat bgi-position-x-center bgi-position-y-top bgi-size-cover dark-top-curved-bg">
+        </div>
+        <div class="container mt-n15">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="dark-outline rounded-lg px-10 py-8 mr-lg-15 mb-7">
+                        <h3 class="mb-3 text-white">Bạn cần trợ giúp ?</h3>
+                        <div class="font-size-3">
+                            Nhắn tin <a class="text-dark-60 text-hover-primary font-weight-bold"
+                                href="https://t.me/maihuybao">cho chúng tôi</a>
+                        </div>
+                    </div>
+                    <div class="dark-outline rounded-lg px-10 py-8 mr-lg-15 mb-10 mb-lg-0">
+                        <h3 class="mb-3 text-white">Thắng nhưng chưa thấy trả thưởng ?</h3>
+                        <div class="font-size-3">
+                            Nhắn tin <a class="text-dark-60 text-hover-primary font-weight-bold"
+                                href="https://t.me/maihuybao">cho chúng tôi</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-start">
+                    <div class="pb-10">
+                        <h3 class="text-muted mb-5 mb-lg-7 font-size-4">Cần trợ giúp ?</h3>
+                        <div class="d-flex flex-column font-size-3 font-weight-bold" id="#supportLink">
+                            {{#each settings.contact}}
+                            <div class="mb-2">
+                                <a href="{{ this.url }}" target="_blank">{{{ this.html }}}</a>
+                            </div>
+                            {{/each}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{#if notification}}
+        <div class="modal" tabindex="-1" id="notiModal" aria-modal="true" role="dialog"
+            style="padding-right: 15px; display: block;">
+            <div class="modal-dialog modal-lg modal-center modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-dismiss="modal"
+                            aria-label="Close">
+                            <span class="svg-icon svg-icon-2x"></span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        {{{ settings.notification.data }}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{/if}}
+        <div class="container py-5 py-lg-10">
+            <div
+                class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
+                <div class="d-flex align-items-center mr-md-2 order-2 order-md-1">
+                    <a href="" class="mr-3 mr-md-6">
+                        <img alt="logo" src="{{ settings.logo }}" class="h-20px h-md-25px">
+                    </a>
+                    <span class="font-size-2 font-weight-bold text-dark-60 pt-1" href="">
+                        Copyright
+                        <script>document.write(new Date().getFullYear())</script> © {{ settings.nameSite }} | All
+                        rights
+                        reserved
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div id="site_scrolltop" class="scrolltop">
+            <span class="svg-icon svg-icon-white">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                    height="24px" viewBox="0 0 24 24" version="1.1" class="">
+                    <g id="Stockholm-icons-/-Navigation-/-Up-2" stroke="none" stroke-width="1" fill="none"
+                        fill-rule="evenodd">
+                        <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                        <rect id="Rectangle" fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1">
+                        </rect>
+                        <path
+                            d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
+                            id="Path-94" fill="#000000" fill-rule="nonzero"></path>
+                    </g>
+                </svg>
+            </span>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.js"></script>
+        <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+            integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"
+            integrity="sha512-rdhY3cbXURo13l/WU9VlaRyaIYeJ/KBakckXIvJNAQde8DgpOmE+eZf7ha4vdqVjTtwQt69bD2wH2LXob/LB7Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src='https://unpkg.com/highlightjs@9.16.2/highlight.pack.js'></script>
+        <script src="{{ public }}/js/jquery.min.js"></script>
+        <script src="{{ public }}/js/main.js"></script>
+        <script src="{{ public }}/js/jquery-ui-1.9.2.custom.min.js"></script>
+        <script src="{{ public }}/js/bootstrap.min.js"></script>
+        <script src="{{ public }}/js/custom.min.js"></script>
+        <script src="../themes/clipboard.js"></script>
+        <script src="../themes/axios.min.js"></script>
+        <script src="../themes/socket.io.js"></script>
+        <script src="../themes/main.min.js"></script>
+
+        {{{ settings.footerScript }}}

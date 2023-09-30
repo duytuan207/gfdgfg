@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="no-js" lang="vi">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="title"
+        content="{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}" />
+    <meta name="description" content="{{ settings.description }}" />
+    <meta name="keywords" content="{{ settings.keywords }}" />
+    <meta name="theme-color" content="{{ settings.themeSite.mainColor }}" />
+    <meta property="og:title"
+        content="{{#if title}}{{ title }} - {{ settings.defaultTitle }}{{else}}{{ settings.defaultTitle }}{{/if}}">
+    <meta property="og:description" content="{{ settings.description }} ">
+    <meta property="og:image" content="{{ settings.thumbnail }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.css" />
+    <link rel="stylesheet" href="{{ public }}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ public }}/css/style.css">
+    <link rel="stylesheet" href="{{ public }}/css/custom.css">
+    <link rel="stylesheet" href="{{ public }}/css/bootstrap-social.css">
+    <script src="../themes/theme-color.js"></script>
+    {{{ settings.headerScript }}}
+</head>
+
+<body>
+    <marquee width="100%" behavior="scroll" class="marquee-noti">
+        <font color="white" style="text-shadow: 0 0 0.2em #ff0000, 0 0 0.2em #ff0000,  0 0 0.2em #ff0000">
+            <b>{{ settings.themeSite.notiRun }}</b>
+        </font>
+    </marquee>
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-brand-image" href="#">
+                    <div>
+                        <img src="{{ settings.logo }}" style="max-height: 60px">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="mainbar hidden-xs">
+        <div class="container">
+        </div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="content-container">
+                <div class="py-5" style="min-height: 80px !important;">
+                    <div id="mainTitle" data-text="{{ settings.themeSite.mainTitle }}">
+                        <h3 class="cursor"></h3>
+                        <h4></h4>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <div class="btn-group btn-group-lg" id="list-game">
+                        {{#each games}}
+                        <button class="btn btn-{{#ifCond @index '==' 0}}primary{{else}}default{{/ifCond}} games"
+                            data-name="{{ this.name }}" data-description="{{ this.description }}"
+                            data-type="{{ this.gameType }}">{{ this.name }}</button>
+                        {{/each}}
+                    </div>
+                </div>
+                <center>
+                    <div class="text-center mt-5">
+                        <div class="btn-group btn-group-lg">
+                            <button class="btn btn-default mt-1 games" data-game="missionDay"
+                                style="position: relative;">
+                                Nhiệm Vụ Ngày
+                            </button>
+                            <button class="btn btn-default mt-1 games" data-game="muster" style="position: relative;">
+                                Điểm Danh Nhận Quà
+                                <b
+                                    style="top: 33px; position: absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center;font-size: 9px;">
+                                    <span><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                        <b class="muster-time">0</b>
+                                    </span>
+                                    <span><i class="fa fa-users" aria-hidden="true"></i>
+                                        <b class="muster-count">0</b>
+                                    </span>
+                                </b>
+                            </button>
+                            <button class="btn btn-default mt-1 games" data-game="gift-code"
+                                style="position: relative;">
+                                Mã Quà Tặng
+                                <b
+                                    style="top: 33px; position: absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center;font-size: 9px;">
+                                    <font color="red">(NEW)</font>
+                                </b>
+                            </button>
+                        </div>
+                    </div>
+                </center>
+                <div class="row justify-content-md-center box-cl">
+                    <div class="col-md-6 mt-3 cl">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading text-center">
+                                CÁCH CHƠI
+                            </div>
+                            <div id="how-to-play" class="panel-body" style="padding-top: 10px; padding-bottom: 20px;">
+                                <div class="tab-panel" data-type="game">
+                                    <p>- Chuyển tiền vào một trong các tài khoản:</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover text-center">
+                                            <thead>
+                                                <tr role="row" class="bg-primary">
+                                                    <th class="text-center text-white">Số điện thoại</th>
+                                                    <th class="text-center text-white">Cược tối thiểu</th>
+                                                    <th class="text-center text-white">Cược tối đa</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tablePhone"></tbody>
+                                        </table>
+                                    </div>
+                                    <p class="mt-3" id="gameNoti"></p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover text-center">
+                                            <thead>
+                                                <tr role="row" class="bg-primary">
+                                                    <th class="text-center text-white">Nội dung</th>
+                                                    <th class="text-center text-white">Số</th>
+                                                    <th class="text-center text-white">Tiền nhận</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableReward"></tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <b>Nắm Rõ Luật chơi trước khi chơi giúp mình. Momo đã update phiên bản 4.0.16 có thể xem trước được mã giao dịch. Vậy "Kết Quả" bằng "Mã Giao Dịch Momo" + "Thời gian Miliseconds nhận bill".</b>
+                                </div>
+                                <div class="tab-panel" data-type="mini-game" data-name="missionDay"
+                                    style="display: none; background-color: #f2dede">
+                                    <div class="text-center">
+                                        <font color="blue"><big><b>Nhiệm Vụ Ngày</b></big></font>
+                                        <br>
+                                        <div id="checkMission">
+                                            <div class="form-group box-danger">
+                                                <label for=""> Số điện thoại: </label>
+                                                <input type="number" class="form-control" name="phone"
+                                                    placeholder="094xxxxxxx">
+                                                <small class="form-text text-muted">Nhập số điện thoại của bạn để kiểm
+                                                    tra.</small>
+                                                <br>
+                                                <button class="btn btn-success">Kiểm Tra</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-danger">
+                                        {{{ settings.missionData.noti }}}
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover text-center">
+                                                <thead>
+                                                    <tr role="row" class="bg-primary">
+                                                        <th class="text-center text-white">Mốc chơi</th>
+                                                        <th class="text-center text-white">Thưởng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{#each settings.missionData.data}}
+                                                    <tr>
+                                                        <td>{{ numberFormat this.amount }}</td>
+                                                        <td>
+                                                            <font {{#ifCond @index '>=' 2}}color="red" {{/ifCond}}>+{{
+                                                                numberFormat this.bonus }}</font>
+                                                        </td>
+                                                    </tr>
+                                                    {{/each}}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-panel" data-type="mini-game" data-name="gift-code"
+                                    style="display: none; background-color: #f2dede">
+                                    <div class="text-center">
+                                        <font color="blue"><big><b>Mã quà tặng</b></big></font>
+                                        <br>
+                                        <div id="checkGift">
+                                            <div class="form-group box-danger">
+                                                <label for="">Số điện thoại:</label>
+                                                <input type="text" class="form-control" name="phone"
+                                                    placeholder="094xxxxxxx">
+                                                <small class="form-text text-muted">Nhập số điện thoại của bạn để
+                                                    nhận.</small>
+                                                <br>
+                                                <label for="">Mã quà tặng:</label>
+                                                <input type="text" class="form-control" name="code"
+                                                    placeholder="ABCXYZ">
+                                                <small class="form-text text-muted">Bạn hãy nhập mã quà tặng vào
+                                                    đây.</small> <br>
+                                                <button class="btn btn-success">Nhận ngay</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-danger">{{{ settings.giftCode.noti }}}</div>
+                                </div>
+                                <div class="tab-panel" data-type="mini-game" data-name="muster"
+                                    style="display: none; background-color: #f2dede">
+                                    <div class="text-center">
+                                        <font color="blue"><big><b>Điểm Danh Nhận Quà Miễn Phí</b></big></font>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Mã quà:
+                                            <font color="orange"><b id="muster-session">#xnxx</b></font>
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-usd" aria-hidden="true"></i> Giá trị: <font color="Maroon">
+                                                <b>{{ numberFormat settings.muster.min }} ~ {{ numberFormat
+                                                    settings.muster.max }}</b> vnđ
+                                            </font>
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-user" aria-hidden="true"></i>: <font color="333366"><b
+                                                    class="muster-count">99999</b> người</font>
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i> Quay thưởng sau: <font
+                                                color="660000"><b class="muster-time">0</b> giây</font>
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-star" aria-hidden="true"></i> Thắng phiên trước:
+                                            <font color="333300"><b id="muster-win">0868***207</b></font>
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <i class="fa fa-bandcamp" aria-hidden="true"></i> Tổng tiền đã
+                                            trao: <font color="blue"><b id="muster-bonus">999,999</b> VNĐ</font>
+                                        </small>
+                                        <br>
+                                        <div id="addMuster">
+                                            <div class="form-group box-danger">
+                                                <label for="">Số điện thoại:</label>
+                                                <input type="text" class="form-control" name="phone"
+                                                    placeholder="094xxxxxxx">
+                                                <small class="form-text text-muted">Nhập số điện thoại của bạn để điểm
+                                                    danh.</small>
+                                                <br>
+                                                <button class="btn btn-success">Điểm danh</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-info button-muster" data-key="muster-guide">Cách
+                                            chơi</button>
+                                        <button class="btn btn-dark button-muster" data-key="muster-history">Lịch
+                                            sử</button>
+                                    </div>
+                                    <div id="muster-guide" class="box-danger">{{{ settings.muster.noti }}}</div>
+                                    <div id="muster-history" class="box-danger" style="display: none">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover text-center">
+                                                <thead>
+                                                    <tr role="row" class="bg-primary">
+                                                        <th class="text-center text-white">Mã</th>
+                                                        <th class="text-center text-white">Tổng</th>
+                                                        <th class="text-center text-white">SDT</th>
+                                                        <th class="text-center text-white">VNĐ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableMuster"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3 cl">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading text-center">
+                                TRẠNG THÁI MOMO
+                            </div>
+                            <div class="panel-body" style="padding-top: 10px; padding-bottom: 20px;">
+                                <p>Lưu ý: Khi đạt hạn mức số lần GD hoặc tổng tiền GD ngày sẽ tự đổi số.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover text-center">
+                                        <thead>
+                                            <tr role="row" class="bg-primary">
+                                                <th class="text-center text-white">Số điện thoại</th>
+                                                <th class="text-center text-white">Trạng thái</th>
+                                                <th class="text-center text-white">Số lần</th>
+                                                <th class="text-center text-white">GD ngày</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableStatus"></tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <div id="checkTransId">
+                                        <div class="form-group">
+                                            <label for="">Nhập mã giao dịch</label>
+                                            <input type="number" class="form-control" name="transId"
+                                                placeholder="Mã giao dịch">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Kiểm tra</button>
+                                    </div>
+                                    <div id="checkByPhone" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="">Nhập mã giao dịch</label>
+                                            <input type="number" class="form-control" name="transId"
+                                                placeholder="Mã giao dịch">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Số điện thoại web nhận tiền</label>
+                                            <input type="number" class="form-control" name="phone"
+                                                placeholder="Số điện thoại bạn chuyển tiền vào">
+                                        </div>
+                                        <button class="btn btn-primary mb-2">Kiểm tra</button>
+                                    </div>
+                                    <div id="transId-result" style="margin-top: 5px;"></div>
+                                    <div id="transId-noti" class="alert alert-danger mt-3">{{{
+                                        settings.checkTransId.noti }}}</div>
+                                    {{#each settings.contact}}
+                                    <div class="mb-2">
+                                        <a href="{{ this.url }}" target="_blank">{{{ this.html }}}</a>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <div class="text-center mb-3">
+                    <h3 class="text-uppercase">LỊCH SỬ THẮNG</h3>
+                    <p class="label label-danger" style="cursor: pointer; display: inline-block; width: 150px; font-size: 15px; margin-bottom: 5px;"><i class="fa fa-clock-o"></i> Millisecond:<br><span id="millis"></span></p>
+                            <script>const millisSpan=document.getElementById("millis");function updateMillis(){var i=Date.now();millisSpan.innerHTML=i}setInterval(updateMillis,1)</script>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover text-center">
+                        <thead>
+                            <tr role="row" class="bg-primary">
+                                <th class="text-center text-white">Số điện thoại</th>
+                                <th class="text-center text-white">Mã GD New</th>
+                                <th class="text-center text-white">Tiền cược</th>
+                                <th class="text-center text-white">Trò chơi</th>
+                                <th class="text-center text-white">Nội dung </th>
+                                <th class="text-center text-white">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableHistory"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="mt-5">
+                        <div class="text-center mb-3">
+                            <h3 class="text-uppercase">LƯU Ý</h3>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-body" style="padding-top: 10px; padding-bottom: 20px;">{{{
+                                settings.notification.data }}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="mt-5">
+                        <div class="text-center mb-3">
+                            <h3 class="text-uppercase">TOP THẮNG {{#ifCond settings.topData.typeTOP '=='
+                                'day'}}NGÀY{{else}}TUẦN{{/ifCond}}</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover text-center">
+                                <thead>
+                                    <tr role="row" class="bg-primary">
+                                        <th class="text-center text-white">#</th>
+                                        <th class="text-center text-white">Người chơi</th>
+                                        <th class="text-center text-white">Tiền thắng</th>
+                                        <th class="text-center text-white">Phần thưởng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each tops}}
+                                    <tr role="row">
+                                        <td>
+                                            <span class="fa-stack">
+                                                <span class="fa fa-circle fa-stack-2x text-danger"></span>
+                                                <strong class="fa-stack-1x text-white">{{sum @index 1}}</strong>
+                                            </span>
+                                        </td>
+                                        <td class="text-left">
+                                            <b>{{ this.phone }}</b>
+                                        </td>
+                                        <td class="text-center">{{ numberFormat this.amount }} VNĐ</td>
+                                        <td>+<font color="red"><b>{{ numberFormat this.bonus }}</b></font> MoMo</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#if jackpot}}
+    <div class="jackpot">
+        <div class="jackpot-close">
+            <font color="red">
+                <big><b>[X]</b></big>
+            </font>
+        </div>
+        <div data-toggle="modal" data-target="#modalJackpot">
+            <center>
+                <img class="animate__animated animate__heartBeat animate__infinite infinite jackpot-image"
+                    src="{{ public }}/images/hu.png" width="80%" />
+            </center>
+            <div class="text-center">
+                <p class="animate__animated animate__shakeX animate__infinite infinite animate__slow jackpot-amount">
+                    <span>{{ numberFormat settings.jackpotCount }}</span> VNĐ
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalJackpot" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h2 class="modal-title text-danger"><b>NỔ HŨ GAME</b></h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="jackpot">
+                        <div class="form-group">
+                            <label for="">Số điện thoại:</label>
+                            <input type="number" name="phone" class="form-control" placeholder="0386966xxx">
+                            <small class="form-text text-muted">Nhập số điện thoại của bạn để tham gia.</small>
+                            <br>
+                            <button class="btn btn-success">Tham Gia</button>
+                        </div>
+                    </div>
+                    {{{ settings.jackpot.noti }}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if notification}}
+    <div class="modal fade" id="notiModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông Báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{{ settings.notification.data }}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="closeNoti" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <footer class="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-xs-12 text-white"> Copyright
+                    <script>document.write(new Date().getFullYear())</script> © {{ settings.nameSite }}
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        let iconNotify = `{{{  settings.themeSite.iconNotify }}}`;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.js"></script>
+    <script src="{{ public }}/js/jquery.min.js"></script>
+    <script src="{{ public }}/js/bootstrap.min.js"></script>
+    <script src="{{ public }}/js/custom.min.js"></script>
+    <script src="../themes/clipboard.js"></script>
+    <script src="../themes/axios.min.js"></script>
+    <script src="../themes/socket.io.js"></script>
+    <script src="../themes/main.min.js"></script>
+    {{{ settings.footerScript }}}
